@@ -16,11 +16,11 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{solution}{1}
-\begin{figure}[htbp]
-    \includegraphics[width=4in]{p1.jpeg}
+\begin{solution}
+\begin{figure*}[htbp]
+    \center{\includegraphics[width=4in]{p1.jpeg}}
     \caption{We claim that this is a valid solution to the puzzle. The red highlights are pairs of touching ones, the blue highlights are pairs of touching threes, and the green highlights are pairs of touching fives.}
-\end{figure}
+\end{figure*}
 \end{solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -31,7 +31,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{solution}{2}
+\begin{solution}
 
 Consider any permutation of the 101 numbers from 2024 to 2124 inclusive, arranged in the sequence $a_0, a_1 \dots a_{100}$. The concatenation of these 101 numbers can be represented as $\overline{a_{100} a_{99} \dots a_{1} a_{0}}$.
 
@@ -67,7 +67,7 @@ Consider any permutation of the 101 numbers from 2024 to 2124 inclusive, arrange
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{solution}{3}
+\begin{solution}
 
 \begin{definition}
     Let $h_i$ denote the height of the $i$th building from the right.
@@ -78,7 +78,7 @@ Consider any permutation of the 101 numbers from 2024 to 2124 inclusive, arrange
 \end{definition}
 
 \begin{definition}
-    A \textit{roof-friendly} pair \textit{min-corresponds} to the shorter building in the pair.
+    A \textit{roof-friendly} pair \textit{min-corresponds} to the shorter building in the pair. Likewise, a shorter building in a \textit{roof-friendly} pair \textit{min-corresponds} with that pair.
 \end{definition}
 
 \begin{definition}
@@ -141,7 +141,8 @@ A \textit{left k-min roof-friendly pair} is a \textit{k-min roof-friendly pair} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{solution}{4}
+\begin{solution}
+
 WLOG, let $x \le y \le x^2$. Because $\sqrt{x} \le x^2$, we know that $x \ge 1$ and also $y \ge 1$. By Vieta's formulas, the roots of the following cubic polynomial must form a solution to the system of equations given in the problem:
 \[
     P(z) = z^3 - \frac{x + x^2 + x^4 + y + y^2 + y^4}{2}z^2 + \frac{x^3 + x^5 + x^6 + y^3 + y^4 + y^6}{2}z - \frac{x^7 + y^7}{2}
@@ -256,8 +257,8 @@ From this point, let $1 < x < y < x^2$ because we covered every single case wher
 
 \begin{proof}
     We use claims \ref{claim:px}, \ref{claim:px2}, \ref{claim:px4}, and \ref{claim:pinfty}.
-    Because $P(z)$ is continuous everywhere in $\RR$, we can apply the intermediate value theorem.
-    From this, we know that $P(z)$ has at least one root in each of the disjoint intervals $(x, x^2)$, $(x^2, x^4)$, and $(x^4, x^2 + x^4 + x^8 + x^{14})$; this implies that there are at least three distinct real roots. Since $P(z)$ is cubic and can have at most three roots, this implies that all of its roots are real.
+    Because $P(z)$ is a polynomial and therefore continuous everywhere in $\RR$, we can apply the intermediate value theorem.
+    From this, we know that $P(z)$ has at least one root in each of the disjoint intervals $(x, x^2)$, $(x^2, x^4)$, and $(x^4, x^2 + x^4 + x^8 + x^{14})$; this implies that there are at least three distinct real roots. Since $P(z)$ is cubic and can have at most three roots, all of its roots must lie inside $(x,x^2 + x^4 + x^8 + x^{14})$.
 \end{proof}
 
 \end{solution}
@@ -271,8 +272,9 @@ From this point, let $1 < x < y < x^2$ because we covered every single case wher
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{solution}{5}
-First, we find the following areas for the white regions:
+\begin{solution}
+
+\noindent We present a painstaking trig bash solution. We find the following areas of the white regions:
 
 \newcommand{\showareacalc}[2]{
     &= \frac{h}{2}(b_1 + b_2) \\
@@ -307,7 +309,7 @@ First, we find the following areas for the white regions:
               &= \showtrianglebarea
 \end{align*}
 
-We now find the following areas for the gray regions:
+We find the areas of the gray regions:
 \begin{align*}
 [A_2A_3A_{12}A_{13}] \showareacalc{\frac{2\pi}{13}}{\frac{4\pi}{13}} \\
 [A_4A_5A_{10}A_{11}] \showareacalc{\frac{6\pi}{13}}{\frac{8\pi}{13}} \\
@@ -429,7 +431,7 @@ We now simplify the RHS with the product-to-sum formula.
 \end{align*}
 
 Since the LHS equals the RHS, Equation \ref{eq:p5final} is definitively true.
-$\blacksquare$
+\qed
 \end{solution}
 
 \end{document}

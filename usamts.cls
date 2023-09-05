@@ -6,8 +6,16 @@
 \ProcessOptions\relax
 \LoadClass{article}
 
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
+
+\usepackage{Alegreya}
+\usepackage{ebgaramond-maths}
+\usepackage{lmodern}
+
+\DeclareRobustCommand\Alegreya{\fontfamily{Alegreya-LF}\selectfont}
+\DeclareRobustCommand\AlegreyaMedium{\fontfamily{Alegreya-LF}\fontseries{sb}\fontshape{n}\selectfont}
 
 \newcounter{qnumber}
 
@@ -17,8 +25,6 @@
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage[pdftex]{graphicx}
 
-\usepackage{mathptmx}
-\usepackage{lmodern}
 
 %% Student and Year/Round data
 \newcommand{\realname}[1]{\newcommand{\printrealname}{#1}}
@@ -36,21 +42,28 @@
 \setlength{\textwidth}{6.5in}
 \setlength{\headwidth}{6.5in}
 \setlength{\textheight}{8in}
-\lhead{Student: \printrealname\ \\Username: \printusername\ \\ID\#: \printusamtsid}
-\chead{\Large USA Mathematical Talent Search}
-\rhead{\begin{tabular}[b]{|c|c|c|}\hline Year&Round&Problem\\\hline\printyear & \printround    
+\lhead{\Alegreya Student: \printrealname\ \\Username: \printusername\ \\ID\#: \printusamtsid}
+\chead{\Alegreya\Large USA Mathematical Talent Search}
+\rhead{\Alegreya\begin{tabular}[b]{|c|c|c|}\hline Year&Round&Problem\\\hline\printyear & \printround    
    &\theqnumber\\\hline\end{tabular}}
 \lfoot{}
 \cfoot{}
-\rfoot{Page \thepage\ of Problem \theqnumber}
+\rfoot{\Alegreya Page \thepage\ of Problem \theqnumber}
 \renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\footrulewidth}{0.3pt}
 \setlength{\textwidth}{6.5in}
 
 %% Print solutions
-\newenvironment{solution}[1]{\setcounter{qnumber}{#1}\setcounter{page}{1}}{\eject}
+\newenvironment{solution}{
+\stepcounter{qnumber}
+%\setcounter{qnumber}{#1}
+\setcounter{page}{1}
+\setcounter{equation}0
+}{\eject}
 
 \renewcommand{\qedsymbol}{$\blacksquare$}
+\renewcommand{\qed}{\hfill$\blacksquare$}
+
 \newcommand{\NN}{\mathbb{N}}
 \newcommand{\ZZ}{\mathbb{Z}}
 \newcommand{\QQ}{\mathbb{Q}}
@@ -66,3 +79,7 @@
 
 \newtheorem{claim}{Claim}[qnumber]
 \numberwithin{equation}{qnumber}
+
+\PassOptionsToPackage{usenames,svgnames,dvipsnames,table}{xcolor}
+\usepackage{xcolor}
+\usepackage[colorlinks=true,pdfusetitle,pagebackref]{hyperref}
