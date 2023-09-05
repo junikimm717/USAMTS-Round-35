@@ -8,6 +8,14 @@
 
 \begin{document}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% P1 Solution %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}{1}
 \begin{figure}[htbp]
     \includegraphics[width=4in]{p1.jpeg}
@@ -15,6 +23,14 @@
 \end{figure}
 \end{solution}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% P2 Solution %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}{2}
 
 Consider any permutation of the 101 numbers from 2024 to 2124 inclusive, arranged in the sequence $a_0, a_1 \dots a_{100}$. The concatenation of these 101 numbers can be represented as $\overline{a_{100} a_{99} \dots a_{1} a_{0}}$.
@@ -29,7 +45,7 @@ Consider any permutation of the 101 numbers from 2024 to 2124 inclusive, arrange
         &= \sum_{i=0}^{100} a_i \paren{10}^{4i} \\
         &\equiv \sum_{i=0}^{100} a_i (1)^i \mod 101 \because 10^4 \equiv 1 \mod 101\\
         &\equiv \sum_{i=0}^{100} a_i \mod 101 \\
-        &\equiv (2124 - 2024 + 1) \cdot \frac{2024 + 2124}{2} \equiv 0 \mod 101 \\
+        &\equiv (2124 - 2024 + 1) \cdot \frac{2024 + 2124}{2} \\
         &\equiv 101 \cdot 2074 \mod 101 \\
         &\equiv 0 \mod 101
     \end{align*}
@@ -38,12 +54,19 @@ Consider any permutation of the 101 numbers from 2024 to 2124 inclusive, arrange
     $\overline{a_{100} a_{99} \dots a_{1} a_{0}}$ is not prime.
 \end{claim}
 \begin{proof}
-    Because
-    $\overline{a_{100} a_{99} \dots a_{1} a_{0}}$ has 404 digits (with the first digit being nonzero), it is strictly greater than $10^{200}$, which itself is greater than 101. So, $\overline{a_{100} a_{99} \dots a_{1} a_{0}}$ has a divisor that is neither itself nor 1.
+    Since $\overline{a_{100} a_{99} \dots a_{1} a_{0}}$ has 404 digits (with the first digit being nonzero), it is strictly greater than $10^{200}$, which itself is greater than 101. So, $\overline{a_{100} a_{99} \dots a_{1} a_{0}}$ has a divisor that is neither itself nor 1.
 \end{proof}
 
 \end{solution}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% P3 Solution %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}{3}
 
 \begin{definition}
@@ -53,6 +76,11 @@ Consider any permutation of the 101 numbers from 2024 to 2124 inclusive, arrange
 \begin{definition}
     Consider a pair of two distinct buildings to be \textit{$k$-min roof-friendly} if and only if the pair is roof-friendly and the building with the shorter height is the $k$th building. 
 \end{definition}
+
+\begin{definition}
+    A \textit{roof-friendly} pair \textit{min-corresponds} to the shorter building in the pair.
+\end{definition}
+
 \begin{definition}
 A \textit{right k-min roof-friendly pair} is a \textit{k-min roof-friendly pair} where the shorter building is to the right of the taller building in the pair.
 \end{definition}
@@ -96,33 +124,39 @@ A \textit{left k-min roof-friendly pair} is a \textit{k-min roof-friendly pair} 
 \end{claim}
 
 \begin{proof}
-     From claims \ref{claim:kminleft} and \ref{claim:kminright}, we conclude that the number of \textit{k-min roof-friendly pairs} is upper bounded by both the number 2 and the number of buildings that are taller than the $k$th building. So, the building with height $n$ cannot have any corresponding min roof-friendly pairs, and the building with height $n-1$ can have at most 1 corresponding \textit{min roof-friendly pair}.
+     From claims \ref{claim:kminleft} and \ref{claim:kminright}, we conclude that the number of \textit{k-min roof-friendly pairs} is upper bounded by both the number 2 and the number of buildings that are taller than the $k$th building. So the tallest building cannot have any \textit{min-corresponding roof-friendly} pairs, and the second tallest building can have at most 1 min-corresponding \textit{roof-friendly pair}.
     
-    The number of roof-friendly pairs can be calculated by summing up all of the $i$-min roof-friendly pairs for $i$ between 1 and n. Thus, our upper bound is $2(n-2) + 1 = 2n-3$.
+    The upper bound on the number of roof-friendly pairs can then be calculated by summing up all of the $i$-min roof-friendly pairs for $i$ between 1 and n, which turns out to be $2(n-2) + 1 = 2n-3$.
     
     We now show a construction exists. Let $h_1 = n$ and $h_i = i-1$ for all $i \ge 2$. The number of roof-friendly pairs between the 2nd and $n$th buildings, because they are ordered in ascending order, must be $n-2$. Now, we consider that the $1$st building (the tallest building) and the $i$th building are always a roof-friendly pair because the $2$nd, \dots $i-1$th buildings are all shorter than the $i$th building. So, this adds $n-1$ more roof-friendly pairs, leaving us with our final total of $2n-3$.
 \end{proof}
 
 \end{solution}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%% P4 Solution %%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}{4}
 WLOG, let $x \le y \le x^2$. Because $\sqrt{x} \le x^2$, we know that $x \ge 1$ and also $y \ge 1$. By Vieta's formulas, the roots of the following cubic polynomial must form a solution to the system of equations given in the problem:
 \[
-P(z) = z^3 - \frac{x + x^2 + x^4 + y + y^2 + y^4}{2}z^2 + \frac{x^3 + x^5 + x^6 + y^3 + y^4 + y^6}{2}z - \frac{x^7 + y^7}{2}
+    P(z) = z^3 - \frac{x + x^2 + x^4 + y + y^2 + y^4}{2}z^2 + \frac{x^3 + x^5 + x^6 + y^3 + y^4 + y^6}{2}z - \frac{x^7 + y^7}{2}
 \]
 
 It thus suffices to show that, given $1 \le x \le y \le x^2$, $P(z)$ must have three real roots with multiplicity. We first eliminate all the equality cases:
 
 \begin{enumerate}
-\item If $y=x$, we get the roots $(x, x^2, x^4)$.
-    Verify this with the following WolframAlpha Query:
+\item If $y=x$, we get the roots $(x, x^2, x^4)$. Verify this with the following WolframAlpha Query:
 \begin{verbatim}
 solve for z, z^3 - z^2 * (x + x^2 + x^4 + x + x^2 + x^4)/2
 + z*(x^3 + x^5 + x^6 + x^3 + x^5 + x^6)/2 - (x^7 + x^7)/2
 \end{verbatim}
     
-\item If $y=x^2$, we get the roots $(x^2, x^4, \frac{x^8 + x}{2})$.
-    Verify this with the following WolframAlpha Query:
+\item If $y=x^2$, we get the roots $(x^2, x^4, \frac{x^8 + x}{2})$. Verify this with the following WolframAlpha Query:
 \begin{verbatim}
 solve for z, z^3 - z^2 * (x + x^2 + x^4 + x^2 + x^4 + x^8)/2
 + z*(x^3 + x^5 + x^6 + x^6 + x^10 + x^12)/2 - (x^7 + x^14)/2
@@ -233,7 +267,7 @@ From this point, let $1 < x < y < x^2$ because we covered every single case wher
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
-%% THE GLORIOUS P5 BASH %%
+%%%%%% P5 Solution %%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -243,7 +277,7 @@ First, we find the following areas for the white regions:
 \newcommand{\showareacalc}[2]{
     &= \frac{h}{2}(b_1 + b_2) \\
     &= \paren{\cos{#1} - \cos{#2}}\paren{\sin{#1} + \sin{#2}} \\
-    &= \cos{#1}\sin{#1} - \cos{#2} \sin{#2} + \sin{#2 - #1} \\
+    &= \cos{#1}\sin{#1} - \cos{#2} \sin{#2} + \sin{\paren{#2 - #1}} \\
     &= \frac{1}{2}\paren{\sin{2 \cdot #1} - \sin{2 \cdot #2}} + \sin{\frac{2\pi}{13}}
 }
 \newcommand{\showtrianglebarea}{
@@ -334,7 +368,7 @@ We compute $\sinthirteen{} + \sinthirteen{2} + \sinthirteen{3} + \sinthirteen{4}
     &= \frac{\sinthirteen{} + \sinthirteen{4} - \sinthirteen{5}} {2 - 2\costhirteen{}}
 \end{align*}
 
-We now also compute $-\paren{\sinthirteen{5} + \sinthirteen{6}}\paren{2 - 2\costhirteen{}}$ using product to sum.
+We now also compute $-\paren{\sinthirteen{5} + \sinthirteen{6}}\paren{2 - 2\costhirteen{}}$ using the fact that $2\sin{a}\cos{b} = \sin{a-b} + \sin{a+b}$.
 
 \begin{align*}
     \sinthirteen{5}\paren{-2 + 2\costhirteen{}} &= -2\sinthirteen{5} + \sinthirteen{4} + \sinthirteen{6} \\
@@ -351,7 +385,7 @@ Therefore,
 -\sinthirteen{5} -\sinthirteen{6} = \frac{\sinthirteen{4} - \sinthirteen{5} -\sinthirteen{6} + \sinthirteen{7}}{2 - 2 \costhirteen{}}
 \]
 
-We now derive Equation \ref{eq:p5final}, which is logically equivalent to the problem statement.
+We now derive Equation \ref{eq:p5final}.
 
 \begin{equation*}
     \frac{1}{2} \tanthirteen{2} = \paren{\sinthirteen{} + \sinthirteen{2} + \sinthirteen{3} + \sinthirteen{4}} - \paren{\sinthirteen{5} + \sinthirteen{6}} \\
@@ -394,7 +428,7 @@ We now simplify the RHS with the product-to-sum formula.
     &= \boxed{\sinthirteen{2} - \frac{\sinthirteen{} + \sinthirteen{3}}{2}}
 \end{align*}
 
-Thus, the LHS equals the RHS, and Equation \ref{eq:p5final} is definitively true.
+Since the LHS equals the RHS, Equation \ref{eq:p5final} is definitively true.
 $\blacksquare$
 \end{solution}
 
