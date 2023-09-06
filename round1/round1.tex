@@ -152,16 +152,14 @@ It thus suffices to show that, given $1 \le x \le y \le x^2$, $P(z)$ must have t
 
 \begin{enumerate}
 \item If $y=x$, we get the roots $(x, x^2, x^4)$. Verify this with the following WolframAlpha Query:
-\begin{verbatim}
-solve for z, z^3 - z^2 * (x + x^2 + x^4 + x + x^2 + x^4)/2
-+ z*(x^3 + x^5 + x^6 + x^3 + x^5 + x^6)/2 - (x^7 + x^7)/2
-\end{verbatim}
+\begin{lstlisting}
+solve for z, z^3 - z^2 * (x + x^2 + x^4 + x + x^2 + x^4)/2 + z*(x^3 + x^5 + x^6 + x^3 + x^5 + x^6)/2 - (x^7 + x^7)/2
+\end{lstlisting}
     
 \item If $y=x^2$, we get the roots $(x^2, x^4, \frac{x^8 + x}{2})$. Verify this with the following WolframAlpha Query:
-\begin{verbatim}
-solve for z, z^3 - z^2 * (x + x^2 + x^4 + x^2 + x^4 + x^8)/2
-+ z*(x^3 + x^5 + x^6 + x^6 + x^10 + x^12)/2 - (x^7 + x^14)/2
-\end{verbatim}
+\begin{lstlisting}
+solve for z, z^3 - z^2 * (x + x^2 + x^4 + x^2 + x^4 + x^8)/2 + z*(x^3 + x^5 + x^6 + x^6 + x^10 + x^12)/2 - (x^7 + x^14)/2
+\end{lstlisting}
 
 \item If $x=1$, then $y=1$, and so $P(z) = z^3 - 3z^2 + 3z - 1 = (x-1)^3$, which has 1 as a triple root.
 \end{enumerate}
@@ -175,12 +173,10 @@ From this point, let $1 < x < y < x^2$ because we covered every single case wher
 \end{claim}
 \begin{proof}
     $$P(x) = \frac{1}{2}\paren{x-y}\paren{x-y^2}\paren{x-y^4}$$
-    Verify this equivalence with the following WolframAlpha Query (should return 0): 
-    \begin{verbatim}
-( (x^1)^3 - (x^1)^2 * (x+x^2+x^4 + y + y^2 + y^4)/2 
-+ (x^1)^1 * (x^3 + x^5 + x^6 + y^3 + y^5 + y^6)/2 - (x^7 + y^7)/2 )
-- 1/2 * (x-y)(x-y^2)(x-y^4)
-    \end{verbatim}
+    Verify this equivalence with the following WolframAlpha Query (should return $0$): 
+\begin{lstlisting}
+( (x^1)^3 - (x^1)^2 * (x+x^2+x^4 + y + y^2 + y^4)/2  + (x^1)^1 * (x^3 + x^5 + x^6 + y^3 + y^5 + y^6)/2 - (x^7 + y^7)/2 ) - 1/2 * (x-y)(x-y^2)(x-y^4)
+\end{lstlisting}
     Now, we perform sign analysis:
     \begin{itemize}
         \item $x - y < 0 \impliedby y > x > 1$
@@ -197,12 +193,10 @@ From this point, let $1 < x < y < x^2$ because we covered every single case wher
 \end{claim}
 \begin{proof}
     $$P(x^2) = \frac{1}{2} \paren{x^2-y}\paren{y^2 - x^2}\paren{y^4 - x^2}$$
-    Verify this equivalence with the following WolframAlpha Query (should return 0): 
-    \begin{verbatim}
-( (x^2)^3 - (x^2)^2 * (x+x^2+x^4 + y + y^2 + y^4)/2 
-+ (x^2)^1 * (x^3 + x^5 + x^6 + y^3 + y^5 + y^6)/2 - (x^7 + y^7)/2 )
-- 1/2 * (x^2 - y)(y^2-x^2)(y^4-x^2)
-    \end{verbatim}
+    Verify this equivalence with the following WolframAlpha Query (should return $0$): 
+\begin{lstlisting}
+( (x^2)^3 - (x^2)^2 * (x+x^2+x^4 + y + y^2 + y^4)/2  + (x^2)^1 * (x^3 + x^5 + x^6 + y^3 + y^5 + y^6)/2 - (x^7 + y^7)/2 ) - 1/2 * (x^2 - y)(y^2-x^2)(y^4-x^2)
+\end{lstlisting}
     Now, we perform sign analysis:
     \begin{itemize}
         \item $x^2 - y > 0 \impliedby y < x^2$
@@ -219,12 +213,10 @@ From this point, let $1 < x < y < x^2$ because we covered every single case wher
 \end{claim}
 \begin{proof}
     $$P(x^4) = \frac{1}{2} \paren{x^4-y} \paren{y^4 - x^4}\paren{y^2 - x^4}$$ 
-    Verify this equivalence with the following WolframAlpha Query (should return 0): 
-    \begin{verbatim}
-( (x^4)^3 - (x^4)^2 * (x+x^2+x^4 + y + y^2 + y^4)/2 
-+ (x^4)^1 * (x^3 + x^5 + x^6 + y^3 + y^5 + y^6)/2 - (x^7 + y^7)/2 )
-- 1/2 * (x^4 - y)(y^4 - x^4)(y^2 - x^4)
-    \end{verbatim}
+    Verify this equivalence with the following WolframAlpha Query (should return $0$): 
+\begin{lstlisting}
+( (x^4)^3 - (x^4)^2 * (x+x^2+x^4 + y + y^2 + y^4)/2  + (x^4)^1 * (x^3 + x^5 + x^6 + y^3 + y^5 + y^6)/2 - (x^7 + y^7)/2 ) - 1/2 * (x^4 - y)(y^4 - x^4)(y^2 - x^4)
+\end{lstlisting}
     Now, we perform sign analysis:
     \begin{itemize}
         \item $x^4 - y > 0 \impliedby x^2 > y > 1$
@@ -353,6 +345,7 @@ So, we need to prove that
 \begin{equation}
     \frac{1}{2} \tanthirteen{2}
     = \sinthirteen{} + \sinthirteen{2} + \sinthirteen{3} + \sinthirteen{4} - \sinthirteen{5} - \sinthirteen{6}
+    \label{eq:p5intermediate}
 \end{equation}
 
 We compute $\sinthirteen{} + \sinthirteen{2} + \sinthirteen{3} + \sinthirteen{4}$.
@@ -387,7 +380,7 @@ Therefore,
 -\sinthirteen{5} -\sinthirteen{6} = \frac{\sinthirteen{4} - \sinthirteen{5} -\sinthirteen{6} + \sinthirteen{7}}{2 - 2 \costhirteen{}}
 \]
 
-We now derive Equation \ref{eq:p5final}.
+We now compute Equation \ref{eq:p5final} from Equation \ref{eq:p5intermediate}.
 
 \begin{equation*}
     \frac{1}{2} \tanthirteen{2} = \paren{\sinthirteen{} + \sinthirteen{2} + \sinthirteen{3} + \sinthirteen{4}} - \paren{\sinthirteen{5} + \sinthirteen{6}} \\

@@ -10,9 +10,11 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
+\usepackage{amsmath,amssymb,amsthm}
+
 \usepackage{Alegreya}
+\usepackage[cmintegrals,cmbraces]{newtxmath}
 \usepackage{ebgaramond-maths}
-\usepackage{lmodern}
 
 \DeclareRobustCommand\Alegreya{\fontfamily{Alegreya-LF}\selectfont}
 \DeclareRobustCommand\AlegreyaMedium{\fontfamily{Alegreya-LF}\fontseries{sb}\fontshape{n}\selectfont}
@@ -22,7 +24,6 @@
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \usepackage{cancel}
-\usepackage{amsmath,amssymb,amsthm}
 \usepackage[pdftex]{graphicx}
 
 
@@ -42,10 +43,10 @@
 \setlength{\textwidth}{6.5in}
 \setlength{\headwidth}{6.5in}
 \setlength{\textheight}{8in}
-\lhead{\Alegreya Student: \printrealname\ \\Username: \printusername\ \\ID\#: \printusamtsid}
+\lhead{\Alegreya \printrealname\ (\printusername) \\ID\printusamtsid}
 \chead{\Alegreya\Large USA Mathematical Talent Search}
-\rhead{\Alegreya\begin{tabular}[b]{|c|c|c|}\hline Year&Round&Problem\\\hline\printyear & \printround    
-   &\theqnumber\\\hline\end{tabular}}
+\rhead{\Alegreya \Large Problem \theqnumber/\printround/\printyear}
+%\rhead{\Alegreya\begin{tabular}[b]{|c|c|c|}\hline Year&Round&Problem\\\hline\printyear & \printround     &\theqnumber\\\hline\end{tabular}}
 \lfoot{}
 \cfoot{}
 \rfoot{\Alegreya Page \thepage\ of Problem \theqnumber}
@@ -56,7 +57,6 @@
 %% Print solutions
 \newenvironment{solution}{
 \stepcounter{qnumber}
-%\setcounter{qnumber}{#1}
 \setcounter{page}{1}
 \setcounter{equation}0
 }{\eject}
@@ -76,10 +76,37 @@
 
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[qnumber]
-
-\newtheorem{claim}{Claim}[qnumber]
 \numberwithin{equation}{qnumber}
+\newtheorem{claim}{\ebgaramond Claim}[qnumber]
 
 \PassOptionsToPackage{usenames,svgnames,dvipsnames,table}{xcolor}
-\usepackage{xcolor}
+\usepackage[table]{xcolor}
 \usepackage[colorlinks=true,pdfusetitle,pagebackref]{hyperref}
+  
+
+\usepackage{listings}
+
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+
+\lstdefinestyle{mystyle}{
+    backgroundcolor=\color{backcolour},   
+    commentstyle=\color{codegreen},
+    keywordstyle=\color{magenta},
+    numberstyle=\tiny\color{codegray},
+    stringstyle=\color{codepurple},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,         
+    breaklines=true,                 
+    captionpos=b,                    
+    keepspaces=true,                 
+    numbers=left,                    
+    numbersep=5pt,                  
+    showspaces=false,                
+    showstringspaces=false,
+    showtabs=false,                  
+    tabsize=2,
+}
+\lstset{style=mystyle}
