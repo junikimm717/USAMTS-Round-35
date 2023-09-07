@@ -10,21 +10,24 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
+\usepackage[pdftex]{graphicx}
+\usepackage[inline]{asymptote}
 \usepackage{amsmath,amssymb,amsthm}
 
-\usepackage{Alegreya}
 \usepackage[cmintegrals,cmbraces]{newtxmath}
-\usepackage{ebgaramond-maths}
+\usepackage{Alegreya}
+%\usepackage{ebgaramond-maths}
 
 \DeclareRobustCommand\Alegreya{\fontfamily{Alegreya-LF}\selectfont}
 \DeclareRobustCommand\AlegreyaMedium{\fontfamily{Alegreya-LF}\fontseries{sb}\fontshape{n}\selectfont}
+
+\newcommand{\headerfont}{\Alegreya}
 
 \newcounter{qnumber}
 
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \usepackage{cancel}
-\usepackage[pdftex]{graphicx}
 
 
 %% Student and Year/Round data
@@ -43,13 +46,12 @@
 \setlength{\textwidth}{6.5in}
 \setlength{\headwidth}{6.5in}
 \setlength{\textheight}{8in}
-\lhead{\Alegreya \printrealname\ (\printusername) \\ID\printusamtsid}
-\chead{\Alegreya\Large USA Mathematical Talent Search}
-\rhead{\Alegreya \Large Problem \theqnumber/\printround/\printyear}
-%\rhead{\Alegreya\begin{tabular}[b]{|c|c|c|}\hline Year&Round&Problem\\\hline\printyear & \printround     &\theqnumber\\\hline\end{tabular}}
+\lhead{\headerfont \printrealname\ (\printusername) \\ID\#\printusamtsid}
+\chead{}
+\rhead{\headerfont \Large USAMTS \theqnumber/\printround/\printyear}
 \lfoot{}
 \cfoot{}
-\rfoot{\Alegreya Page \thepage\ of Problem \theqnumber}
+\rfoot{\headerfont Page \thepage\ of Problem \theqnumber}
 \renewcommand{\headrulewidth}{0.5pt}
 \renewcommand{\footrulewidth}{0.3pt}
 \setlength{\textwidth}{6.5in}
@@ -77,11 +79,13 @@
 \theoremstyle{definition}
 \newtheorem{definition}{Definition}[qnumber]
 \numberwithin{equation}{qnumber}
-\newtheorem{claim}{\ebgaramond Claim}[qnumber]
+\newtheorem{claim}{Claim}[qnumber]
 
 \PassOptionsToPackage{usenames,svgnames,dvipsnames,table}{xcolor}
 \usepackage[table]{xcolor}
+\usepackage{tabularray}
 \usepackage[colorlinks=true,pdfusetitle,pagebackref]{hyperref}
+\usepackage{floatrow} 
   
 
 \usepackage{listings}
@@ -95,7 +99,7 @@
     backgroundcolor=\color{backcolour},   
     commentstyle=\color{codegreen},
     keywordstyle=\color{magenta},
-    numberstyle=\tiny\color{codegray},
+    numberstyle=\footnotesize\color{codegray},
     stringstyle=\color{codepurple},
     basicstyle=\ttfamily\footnotesize,
     breakatwhitespace=false,         

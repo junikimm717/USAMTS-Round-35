@@ -1,4 +1,6 @@
 \documentclass[10pt]{../usamts}
+\usepackage[inline]{asymptote}
+
 
 \realname{Juni Kim}
 \username{junikimm}
@@ -17,10 +19,32 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
-\begin{figure*}[htbp]
-    \center{\includegraphics[width=4in]{p1.jpeg}}
-    \caption{We claim that this is a valid solution to the puzzle. The red highlights are pairs of touching ones, the blue highlights are pairs of touching threes, and the green highlights are pairs of touching fives.}
-\end{figure*}
+\begin{claim}
+    There exists a solution to the puzzle.
+\end{claim}
+\begin{proof}
+
+\newcommand{\one}{\cellcolor{red!20}1}
+\newcommand{\thr}{\cellcolor{blue!20}3}
+\newcommand{\fiv}{\cellcolor{green!20}5}
+\newcommand{\emp}{\cellcolor{gray}}
+
+We present a valid solution below. Note that every square touches exactly one other same-numbered square. Colors are also included for visualization.
+
+\begin{figure}[h!]
+\Large \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    \fiv & \thr & \thr & \fiv & \fiv & \thr & \fiv \\ \hline
+    \one & \fiv & \one & \one & \thr & \one & \fiv \\ \hline
+    \one & \thr & \thr & \emp & \fiv & \one & \thr \\ \hline
+    \emp & \fiv & \one & \one & \thr & \fiv & \thr \\ \hline
+    \thr & \thr & \fiv & \thr & \emp & \one & \emp  \\ \hline
+    \fiv & \emp & \one & \one & \fiv & \one & \fiv \\ \hline
+    \fiv & \thr & \thr & \fiv & \thr & \thr & \fiv \\ \hline
+\end{tabular}
+\end{figure}
+
+\end{proof}
 \end{solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -39,13 +63,12 @@ Consider any permutation of the 101 numbers from 2024 to 2124 inclusive, arrange
     $101\,|\,\overline{a_{100} a_{99} \dots a_{1} a_{0}}$
 \end{claim}
 \begin{proof}
-    
     \begin{align*}
     \overline{a_{100} a_{99} \dots a_{1} a_{0}}
         &= \sum_{i=0}^{100} a_i \paren{10}^{4i} \\
         &\equiv \sum_{i=0}^{100} a_i (1)^i \mod 101 \because 10^4 \equiv 1 \mod 101\\
         &\equiv \sum_{i=0}^{100} a_i \mod 101 \\
-        &\equiv (2124 - 2024 + 1) \cdot \frac{2024 + 2124}{2} \\
+        &\equiv (2124 - 2024 + 1) \cdot \frac{2024 + 2124}{2} \mod 101 \\
         &\equiv 101 \cdot 2074 \mod 101 \\
         &\equiv 0 \mod 101
     \end{align*}
@@ -143,20 +166,21 @@ A \textit{left k-min roof-friendly pair} is a \textit{k-min roof-friendly pair} 
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
 
-WLOG, let $x \le y \le x^2$. Because $\sqrt{x} \le x^2$, we know that $x \ge 1$ and also $y \ge 1$. By Vieta's formulas, the roots of the following cubic polynomial must form a solution to the system of equations given in the problem:
-\[
-    P(z) = z^3 - \frac{x + x^2 + x^4 + y + y^2 + y^4}{2}z^2 + \frac{x^3 + x^5 + x^6 + y^3 + y^4 + y^6}{2}z - \frac{x^7 + y^7}{2}
-\]
+Without loss of generality, we let $x \le y$. $y$ is upper bounded to $x^2$, so $x \le y \le x^2$. Since $x \le x^2$, we know that $x \ge 1$ and therefore $1 \le x \le y \le x^2$. By Vieta's formulas, the roots of the following cubic polynomial must form a solution to the system of equations given in the problem:
+\begin{align*}
+    P(z) &= z^3 - (a+b+c)z^2 + (ab+bc+ca)z -abc \\
+         &= z^3 - \frac{x + x^2 + x^4 + y + y^2 + y^4}{2}z^2 + \frac{x^3 + x^5 + x^6 + y^3 + y^4 + y^6}{2}z - \frac{x^7 + y^7}{2}
+\end{align*}
 
-It thus suffices to show that, given $1 \le x \le y \le x^2$, $P(z)$ must have three real roots with multiplicity. We first eliminate all the equality cases:
+It thus suffices to show that $P(z)$ must have three real roots with multiplicity. We first eliminate all the equality cases:
 
 \begin{enumerate}
-\item If $y=x$, we get the roots $(x, x^2, x^4)$. Verify this with the following WolframAlpha Query:
+\item If $y=x$, $P(z)$ has roots at $\paren{x, x^2, x^4}$. Verify this with the following WolframAlpha Query:
 \begin{lstlisting}
 solve for z, z^3 - z^2 * (x + x^2 + x^4 + x + x^2 + x^4)/2 + z*(x^3 + x^5 + x^6 + x^3 + x^5 + x^6)/2 - (x^7 + x^7)/2
 \end{lstlisting}
     
-\item If $y=x^2$, we get the roots $(x^2, x^4, \frac{x^8 + x}{2})$. Verify this with the following WolframAlpha Query:
+\item If $y=x^2$, $P(z)$ has roots at $\paren{x^2, x^4, \frac{x^8 + x}{2}}$. Verify this with the following WolframAlpha Query:
 \begin{lstlisting}
 solve for z, z^3 - z^2 * (x + x^2 + x^4 + x^2 + x^4 + x^8)/2 + z*(x^3 + x^5 + x^6 + x^6 + x^10 + x^12)/2 - (x^7 + x^14)/2
 \end{lstlisting}
@@ -266,33 +290,70 @@ From this point, let $1 < x < y < x^2$ because we covered every single case wher
 %%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
 
-\noindent We present a painstaking trig bash solution. We find the following areas of the white regions:
+\newcommand{\sinthirteen}[1]{ \sin{{\frac{#1\pi}{13}}} }
+\newcommand{\costhirteen}[1]{ \cos{{\frac{#1\pi}{13}}} }
+\newcommand{\tanthirteen}[1]{ \tan{{\frac{#1\pi}{13}}} }
+\newcommand{\expthirteen}[1]{ e^{\frac{#1\pi}{13}} }
+
+We will explicitly calculate the area of every region (as defined in the problem statement) on the 13-gon using a combination of cartesian coordinates (see the diagram below) and trigonometry. We assume that the circumradius of the 13-gon is $1$. Proving that the areas are equal in this case will suffice because the area of every single region is proportional to the square of the circumradius.
+
+\begin{center}
+\begin{asy}
+import graph;
+size(15cm,0);
+defaultpen(fontsize(10pt)+fontcommand("\footnotesize"));
+xaxis( Label("$x$"), Ticks(new real[]{-1,1}));
+
+real r=1;
+pair[] A = {};
+for (int i = 0; i < 13; ++i) {
+    pair a = (r*cos((i+0)*2*pi/13), r*sin((i+0)*2*pi/13));
+    pair b = (r*cos((i+1)*2*pi/13), r*sin((i+1)*2*pi/13));
+    string alabel = "$A_{" + string((i+1)) + "} \left(\cos{\frac{" + string(2*(i)) + "\pi}{13}}, \sin{\frac{" + string(2*(i)) + "\pi}{13}}\right)$";
+    if (i == 0) {
+        dot("$A_1 (1, 0)$", a, 3*dir(30));
+    } else {
+        dot(alabel, a, 2*dir(360 * (i)/13));
+    }
+    A.append(array(1,a));
+    draw(a--b,blue);
+}
+pair B = (cos(12*pi/13) - sin(pi/13) * tan(2 * pi/13), 0);
+dot("$B \tiny\left(\costhirteen{12} - \sinthirteen{} \cdot \tanthirteen{2}, 0\right)$", B, 3*dir(180 - 30));
+draw(B--A[6], blue);
+draw(B--A[7], blue);
+
+draw(A[1]--A[12]);
+draw(A[2]--A[11]);
+draw(A[3]--A[10]);
+draw(A[4]--A[9]);
+draw(A[5]--A[8]);
+
+filldraw(A[1]--A[2]--A[11]--A[12]--cycle, gray);
+filldraw(A[3]--A[4]--A[9]--A[10]--cycle, gray);
+filldraw(A[5]--A[6]--A[7]--A[8]--cycle, gray);
+\end{asy}
+\end{center}
+
+The problem asks us to prove that
+\begin{equation}
+[A_1A_2A_3] + [A_3A_4A_{11}A_{12}] + [A_5A_6A_{8}A_{10}] + [A_7A_8B] = [A_2A_3A_{12}A_{13}] + [A_4A_5A_{10}A_{11}]+ [A_6A_7A_{8}A_{9}]
+\label{eq:statement}
+\end{equation}
+
+We compute the area of each white region:
 
 \newcommand{\showareacalc}[2]{
     &= \frac{h}{2}(b_1 + b_2) \\
-    &= \paren{\cos{#1} - \cos{#2}}\paren{\sin{#1} + \sin{#2}} \\
-    &= \cos{#1}\sin{#1} - \cos{#2} \sin{#2} + \sin{\paren{#2 - #1}} \\
+    &= \cancel{\frac{1}{2}}\paren{\cos{#1} - \cos{#2}}\paren{\cancel{2} \cdot \sin{#1} + \cancel{2} \cdot \sin{#2}} \\
+    &= \cos{#1}\sin{#1} - \cos{#2} \sin{#2} + \left[ \cos{#1}\sin{#2}-\sin{#1}\cos{#2} \right] \\
+    &= \cos{#1}\sin{#1} - \cos{#2} \sin{#2} + \left[\sin{\paren{#2 - #1}}\right] \\
     &= \frac{1}{2}\paren{\sin{2 \cdot #1} - \sin{2 \cdot #2}} + \sin{\frac{2\pi}{13}}
 }
-\newcommand{\showtrianglebarea}{
-    \frac{1}{2} \tan{\frac{2\pi}{13}} - \frac{1}{2} \sin{\frac{2\pi}{13}}
-}
 
-\newcommand{\sinthirteen}[1]{
-    \sin{{\frac{#1\pi}{13}}}
-}
-\newcommand{\costhirteen}[1]{
-    \cos{{\frac{#1\pi}{13}}}
-}
-\newcommand{\tanthirteen}[1]{
-    \tan{{\frac{#1\pi}{13}}}
-}
+\newcommand{\showtrianglebarea}{ \frac{1}{2} \tan{\frac{2\pi}{13}} - \frac{1}{2} \sin{\frac{2\pi}{13}} }
 
-\newcommand{\expthirteen}[1]{
-    e^{\frac{#1\pi}{13}}
-}
-
-\begin{align*} 
+\begin{align*}
 [A_1A_2A_3] \showareacalc{0}{\frac{2\pi}{13}} \\
 [A_3A_4A_{11}A_{12}] \showareacalc{\frac{4\pi}{13}}{\frac{6\pi}{13}} \\
 [A_5A_6A_{8}A_{10}] \showareacalc{\frac{8\pi}{13}}{\frac{10\pi}{13}} \\
@@ -301,44 +362,42 @@ From this point, let $1 < x < y < x^2$ because we covered every single case wher
               &= \showtrianglebarea
 \end{align*}
 
-We find the areas of the gray regions:
+We compute the area of each gray region:
 \begin{align*}
 [A_2A_3A_{12}A_{13}] \showareacalc{\frac{2\pi}{13}}{\frac{4\pi}{13}} \\
 [A_4A_5A_{10}A_{11}] \showareacalc{\frac{6\pi}{13}}{\frac{8\pi}{13}} \\
 [A_6A_7A_{8}A_{9}] \showareacalc{\frac{10\pi}{13}}{\frac{12\pi}{13}} \\
 \end{align*}
 
-The problem asks us to prove that
-\begin{equation}
-[A_1A_2A_3] + [A_3A_4A_{11}A_{12}] + [A_5A_6A_{8}A_{10}] + [A_7A_8B] = [A_2A_3A_{12}A_{13}] + [A_4A_5A_{10}A_{11}]+ [A_6A_7A_{8}A_{9}]
-\end{equation}
+Since we are trying to prove the white and gray regions have the same area, we put those two expressions into an equation and perform some cancellations:
 
-First, we can cancel the three $\sin\frac{2\pi}{13}$ terms on each side:
-
-\newcommand{\showsinsubtraction}[2] {
-    \frac{1}{2}\paren{\sinthirteen{#1} - \sinthirteen{#2}}
-}
+\newcommand{\showsinsubtraction}[2] { \left[\frac{1}{2}\paren{\sinthirteen{#1} - \sinthirteen{#2}} + \cancel{\sinthirteen{2}}\right] }
 
 \begin{align*}
-    &\showsinsubtraction{0}{4} +
-    \showsinsubtraction{8}{12} +
-    \showsinsubtraction{16}{20} +
-    \showtrianglebarea \\
-    &=
-    \showsinsubtraction{4}{8} +
-    \showsinsubtraction{12}{16} +
+    \showsinsubtraction{0}{4} &+
+    \showsinsubtraction{8}{12} +\\
+    \showsinsubtraction{16}{20} &+
+    \left[\showtrianglebarea\right] \\
+    &=\\
+    \showsinsubtraction{4}{8} &+
+    \showsinsubtraction{12}{16} +\\
     \showsinsubtraction{20}{24}
 \end{align*}
 
-Rearranging a lot of terms and using some identities, we get
+Rearranging the terms, we get
 
-\begin{align*}
-    &\showtrianglebarea \\
-    &= \sinthirteen{4} - \sinthirteen{8} + \sinthirteen{12} - \sinthirteen{16}
-    + \sinthirteen{20} + \frac{-\sin0 - \sinthirteen{24}}{2} \\
-    &= \sinthirteen{4} - \sinthirteen{5} + \sinthirteen{} + \sinthirteen{3}
-    - \sinthirteen{6} + \frac{\sin0 + \sinthirteen{2}}{2}
-\end{align*}
+\begin{equation}
+    \showtrianglebarea
+    = \sinthirteen{4} - \sinthirteen{8} + \sinthirteen{12} - \sinthirteen{16} + \sinthirteen{20} + \frac{1}{2}\paren{-\sin0 - \sinthirteen{24}}
+    \label{eq:5rearranged}
+\end{equation}
+
+We now use the trigonometric identities $\sin\paren{\pi-\theta} = \sin{\theta}$, $\sin\paren{2\pi-\theta} = -\sin{\theta}$, and $\sin\paren{\pi+\theta} = -\sin{\theta}$ to re-express the RHS of Equation \ref{eq:5rearranged}.
+
+\begin{equation*}
+    \showtrianglebarea
+    = \sinthirteen{4} - \sinthirteen{5} + \sinthirteen{} + \sinthirteen{3} - \sinthirteen{6} + \frac{1}{2}\paren{\cancel{\sin0} + \sinthirteen{2}}
+\end{equation*} 
 
 So, we need to prove that
 
@@ -377,7 +436,7 @@ We now also compute $-\paren{\sinthirteen{5} + \sinthirteen{6}}\paren{2 - 2\cost
 
 Therefore,
 \[
--\sinthirteen{5} -\sinthirteen{6} = \frac{\sinthirteen{4} - \sinthirteen{5} -\sinthirteen{6} + \sinthirteen{7}}{2 - 2 \costhirteen{}}
+    -\sinthirteen{5} -\sinthirteen{6} = \frac{\sinthirteen{4} - \sinthirteen{5} -\sinthirteen{6} + \sinthirteen{7}}{2 - 2 \costhirteen{}}
 \]
 
 We now compute Equation \ref{eq:p5final} from Equation \ref{eq:p5intermediate}.
@@ -394,10 +453,10 @@ We now compute Equation \ref{eq:p5final} from Equation \ref{eq:p5intermediate}.
     &= \frac{\sinthirteen{} + 2\sinthirteen{4} - 2\sinthirteen{5} - \sinthirteen{6} + \sinthirteen{7}} {2 - 2\costhirteen{}} \\
 \end{align*}
 
-\begin{equation*}
-    2 \times \frac{\sinthirteen{} + 2\sinthirteen{4} - 2\sinthirteen{5} - \sinthirteen{6} + \sinthirteen{7}} {2 - 2\costhirteen{}}
-    = 2 \times \frac{1}{2} \frac{\sinthirteen{2}}{\costhirteen{2}} \\
-\end{equation*}
+\begin{align*}
+     \frac{1}{2} \tanthirteen{2} = \frac{1}{2} \frac{\sinthirteen{2}}{\costhirteen{2}} &= \frac{\sinthirteen{} + 2\sinthirteen{4} - 2\sinthirteen{5} - \sinthirteen{6} + \sinthirteen{7}} {2 - 2\costhirteen{}} \\
+     \frac{\sinthirteen{2}}{\costhirteen{2}} &= \frac{\sinthirteen{} + 2\sinthirteen{4} - 2\sinthirteen{5} - \sinthirteen{6} + \sinthirteen{7}} {1 - \costhirteen{}} \\
+\end{align*}
 
 \begin{equation}
     \costhirteen{2}\paren{\sinthirteen{} + 2\sinthirteen{4} - 2\sinthirteen{5} - \sinthirteen{6} + \sinthirteen{7}}
@@ -423,7 +482,7 @@ We now simplify the RHS with the product-to-sum formula.
     &= \boxed{\sinthirteen{2} - \frac{\sinthirteen{} + \sinthirteen{3}}{2}}
 \end{align*}
 
-Since the LHS equals the RHS, Equation \ref{eq:p5final} is definitively true.
+Since the LHS equals the RHS, Equation \ref{eq:p5final} is definitively true. Since \ref{eq:p5final} is true if and only if Equation \ref{eq:statement} is true, we have proven that the white and gray regions have equal areas.
 \qed
 \end{solution}
 
