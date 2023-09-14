@@ -251,30 +251,34 @@ From this point, let $1 < x < y < x^2$ because we covered every single case wher
 \end{proof}
 
 %%%%%%%%%% CASE 4 %%%%%%%%%%
+\newcommand{\zeesub}{\paren{x^2 + x^4 + x^8 + x^{14}}}
 \begin{claim}
-    $P(x^2 + x^4 + x^8 + x^{14}) > 0$.
+    $P\zeesub > 0$.
     \label{claim:pinfty}
 \end{claim}
 \begin{proof}
-    Let $z = x^2 + x^4 + x^8 + x^{14}$. $x > 1$ implies $z > 1$.
+    Note that $x > 1$ implies $\zeesub > 1$.
     \begin{align*}
-    P(z) &> P(z)/z^2 \\
-         &> z - \frac{x+x^2+x^4+y+y^2+y^4}{2} - \frac{x^7+y^7}{2z^2} \\
-         &> z - \frac{x+x^2+x^4+y+y^2+y^4}{2} - \frac{x^7+y^7}{2} \\
-         &> z - (y + y^2 + y^4 + y^7) \\
-         &> z - (x^2 + x^4 + x^8 + x^{14})
+        \frac{P\zeesub}{\zeesub^2}  &= \zeesub - \frac{x+x^2+x^4+y+y^2+y^4}{2} +\\ 
+                        & \frac{x^3 + x^5 + x^6 + y^3 + y^4 + y^6}{2\zeesub}- \frac{x^7+y^7}{2\zeesub^2} \\
+                  &> \zeesub - \frac{x+x^2+x^4+y+y^2+y^4}{2} + \\
+                  &- \frac{x^7+y^7}{2\zeesub^2} \\
+                  &> \zeesub - \frac{x+x^2+x^4+y+y^2+y^4}{2} - \frac{x^7+y^7}{2} \\
+                  &> \zeesub - (y + y^2 + y^4 + y^7) \\
+                  &> \zeesub - (x^2 + x^4 + x^8 + x^{14})\\
+                  &= 0
     \end{align*}
-    Thus,  $P(x^2 + x^4 + x^8 + x^{14})$ is positive.
+    Since $\frac{P\zeesub}{\zeesub^2} > 0$ and $\zeesub^2 > 1$, we have proven that $P(x^2 + x^4 + x^8 + x^{14})$ is positive.
 \end{proof}
 
 \begin{claim}
-    $P(z)$ has three real roots.
+    $P(z)$ has all real roots. Therefore the system of equations in the problem statement has a real solution $(a,b,c)$.
 \end{claim}
 
 \begin{proof}
     We use claims \ref{claim:px}, \ref{claim:px2}, \ref{claim:px4}, and \ref{claim:pinfty}.
     Because $P(z)$ is a polynomial and therefore continuous everywhere in $\RR$, we can apply the intermediate value theorem.
-    From this, we know that $P(z)$ has at least one root in each of the disjoint intervals $(x, x^2)$, $(x^2, x^4)$, and $(x^4, x^2 + x^4 + x^8 + x^{14})$; this implies that there are at least three distinct real roots. Since $P(z)$ is cubic and can have at most three roots, all of its roots must lie inside $(x,x^2 + x^4 + x^8 + x^{14})$.
+    From this, we know that $P(z)$ has at least one root in each of the disjoint intervals $(x, x^2)$, $(x^2, x^4)$, and $(x^4, x^2 + x^4 + x^8 + x^{14})$; this implies that there are at least three distinct real roots. Since $P(z)$ is cubic and can have at most three roots, all of its roots must lie inside the set $(x,x^2 + x^4 + x^8 + x^{14})$.
 \end{proof}
 
 \end{solution}
@@ -301,7 +305,7 @@ We will explicitly calculate the area of every region (as defined in the problem
 \begin{asy}
 import graph;
 size(15cm,0);
-defaultpen(fontsize(10pt)+fontcommand("\footnotesize"));
+defaultpen(fontsize(10pt)+fontcommand("\footnotesize\Alegreya"));
 xaxis( Label("$x$"), Ticks(new real[]{-1,1}));
 
 real r=1;
