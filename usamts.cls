@@ -59,6 +59,7 @@
 %% Print solutions
 \newenvironment{solution}{
 \stepcounter{qnumber}
+\stepcounter{section}
 \setcounter{page}{1}
 \setcounter{equation}0
 }{\eject}
