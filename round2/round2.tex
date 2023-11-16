@@ -118,17 +118,17 @@ For our base case, $a_1 = 1$ because the only possible code is having all the di
     $$a_n = n^6 - \sum_{k=1}^{n-1} \binom{n}{k} a_k$$
 \end{claim}
 \begin{proof}
-    The reasoning is fairly straightforward. The number of combinations in which we have at most $n$ digits is clearly $n^6$. Now, we just need to remove the cases in which we're not using all $n$ digits. There are $\binom{n}{k} a_k$ ways in which we can first choose a subset of $k$ digits and then make a string using all $k$ digits at least once.
+    The reasoning is fairly straightforward. The number of combinations where we use at most $n$ of our allotted digits is $n^6$. Now, we just need to remove the cases where we're not using all $n$ digits. There are $\binom{n}{k} a_k$ ways in which we can first choose a subset of $k$ digits and then make a string using all $k$ digits at least once.
 \end{proof}
 \begin{align*}
 a_2 &= 2^6 - \binom{2}{1} \cdot a_1 = 62\\
 a_3 &= 3^6 - \binom{3}{2} \cdot a_2 - \binom{3}{1} \cdot a_1 = 540\\
-a_4 &= 4^6 - \binom{4}{3}\cdot a_3 - \binom{4}{2} \cdot a_2 - \binom{4}{1} \cdot a_1 = 1560\\
-a_5 &= 5^6 - \binom{5}{4}\cdot a_4 - \binom{5}{3}\cdot a_3 - \binom{5}{2} \cdot a_2 - \binom{5}{1} \cdot a_1 = 1800\\
-a_6 &= 6! = 720 \tag{shortcutting go brrr}\\
+a_4 &= 4^6 - \binom{4}{3} \cdot a_3 - \binom{4}{2} \cdot a_2 - \binom{4}{1} \cdot a_1 = 1560\\
+a_5 &= 5^6 - \binom{5}{4} \cdot a_4 - \binom{5}{3} \cdot a_3 - \binom{5}{2} \cdot a_2 - \binom{5}{1} \cdot a_1 = 1800\\
+a_6 &= 6^6 - \binom{6}{5} \cdot a_5 - \binom{6}{4} \cdot a_4 - \binom{6}{3} \cdot a_3 - \binom{6}{2} \cdot a_2 - \binom{6}{1} \cdot a_1 = 720\\
 \end{align*}
 
-It is clear from this calculation that we get the most possible combinations when 5 of the digits have been smudged.
+It is clear from these calculations that we get the most possible combinations when 5 of the digits have been smudged.
 
 \end{solution}
 
@@ -194,7 +194,7 @@ Note that $AFIE$ is a cyclic quadrilateral because $\angle IFA = \angle IEA = 90
 %%%%%%%%%%                 %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
-This was quite the painful construction problem...
+This was quite a painful construction problem\dots
 
 The answer is all $n,m$ such that \fbox{$n+m \equiv 1 \mod 4$ or $n \equiv m \mod 4$}.
 
@@ -235,24 +235,25 @@ We first handle the case where $n \equiv m \mod 4$. Without loss of generality, 
     After this process is done, the lines $x=m$, $y=m$, and $x+y = 2m$ will intersect $\floor{\frac{m-1}{2}} + \floor{\frac{n}{2}} + (m \mod 2)$, $\floor{\frac{n-1}{2}} + \floor{\frac{m}{2}} + (m \mod 2)$, and $\floor{\frac{m-1}{2}} + \floor{\frac{m}{2}} + (m \mod 2)$ points respectively. Since $m \equiv n \mod 4$, these expressions will all be odd. Furthermore, the lines $x=k$ for all $1 \leq k \leq 2m-1$ and $x=k$ for all $1 \leq k \leq 2m-1$ will all intersect exactly one point from our set.
     \item Create a ``tail'' to cover all of the outer rows and columns:
     \begin{enumerate}
-        \item Select all the points of the form $\paren{ m+2\floor{\frac{m}{2}}-1+2k, m-2\floor{\frac{m}{2}}+2 }$ for $1 \leq k \leq \frac{m-n}{2}$. This adds an even number of points since $m \equiv n \mod 4$, so the line $y = m-2\floor{\frac{m}{2}}+2$ still intersects an odd number of points.
-        \item Select all the points of the form $\paren{ m-2\floor{\frac{m}{2}}+1, m+2\floor{\frac{m}{2}}+2k }$ for $1 \leq k \leq \frac{m-n}{2}$. This adds an even number of points for the same reason as before, so the line $x = m-2\floor{\frac{m}{2}}+1$ still intersects an odd number of points.
+        \item Select all the points of the form $\paren{ m+2\floor{\frac{m}{2}}-1+2k, m-2\floor{\frac{m}{2}}+2 }$ for $1 \leq k \leq \frac{n-m}{2}$. This adds an even number of points since $m \equiv n \mod 4$, so the line $y = m-2\floor{\frac{m}{2}}+2$ still intersects an odd number of points.
+        \item Select all the points of the form $\paren{ m-2\floor{\frac{m-1}{2}}+1, m+2\floor{\frac{m-1}{2}}+2k }$ for $1 \leq k \leq \frac{n-m}{2}$. This adds an even number of points for the same reason as before, so the line $x = m-2\floor{\frac{m-1}{2}}+1$ still intersects an odd number of points.
     \end{enumerate}
-    With the addition of these points, all horizontal and vertical lines now intersect an odd number of points; all lines of the form $x = k$ for all $2m \geq k < m+n$ and $y=k$ for all $2m \geq k < m+n$ will also intersect exactly one point.
+    With the addition of these points, all horizontal and vertical lines now intersect an odd number of points; all lines of the form $x = k$ for all $2m \leq k < m+n$ and $y=k$ for all $2m \leq k < m+n$ will also intersect exactly one point.
     
-    Let the set of points that we selected in Step 4 be denoted $U$. Notice that $\paren{ m+2\floor{\frac{m}{2}}-1}+\paren{2k + m-2\floor{\frac{m}{2}}+2} = \paren{m-2\floor{\frac{m}{2}}+1}+\paren{m+2\floor{\frac{m}{2}}+2k}$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
+    Let the set of points that we selected in Step 4 be denoted $U$. Notice that $\paren{ m+2\floor{\frac{m}{2}}-1+2k}+\paren{m-2\floor{\frac{m}{2}}+2} = \paren{m-2\floor{\frac{m-1}{2}}+1}+\paren{m+2\floor{\frac{m-1}{2}}+2k}$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
 \end{enumerate}
 
-Figure \ref{fig:congconstruct} shows how our construction is supposed to appear.
+Figure \ref{fig:congconstruct} shows how our construction is supposed to appear (consider this to be more authoritative in case of any discrepancies).
 
 \begin{figure}[htbp]
+\centering
     \begin{tabular}{c c}
-    \includegraphics[width=7cm]{round2/p5construct/construct_8_12.png}&
-    \includegraphics[width=7cm]{round2/p5construct/construct_9_17.png}\\
-    \includegraphics[width=7cm]{round2/p5construct/construct_6_14.png}&
-    \includegraphics[width=7cm]{round2/p5construct/construct_7_11.png}\\
+    \includegraphics[width=9cm]{round2/p5construct/construct_8_16.png}&
+    \includegraphics[width=9cm]{round2/p5construct/construct_9_17.png}\\
+    \includegraphics[width=9cm]{round2/p5construct/construct_6_14.png}&
+    \includegraphics[width=9cm]{round2/p5construct/construct_7_15.png}\\
     \end{tabular}
-    \caption{Construction applied when m and n are congruent to (going from left to right, top to bottom: 0 mod 4, 1 mod 4, 2 mod 4, 3 mod 4}
+    \caption{Our construction method applied when m and n are congruent to (going from left to right, top to bottom) 0 mod 4, 1 mod 4, 2 mod 4, 3 mod 4}
     \label{fig:congconstruct}
 \end{figure}
 
@@ -274,10 +275,11 @@ We now handle the case where $m \equiv 0 \mod 4$ and $n \equiv 1 \mod 4$ without
     
     Let the set of points that we selected in Step 4 be denoted $U$. Notice that $\paren{2}+\paren{m+2k} = \paren{m+2k-1}+\paren{3}$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
 \end{enumerate}
-Figure \ref{fig:zerooneconstruct} shows how our construction is supposed to appear.
+Figure \ref{fig:zerooneconstruct} shows how our construction is supposed to appear (consider this to be more authoritative in case of any discrepancies).
 
 \begin{figure}[htbp]
-    \includegraphics[width=8cm]{round2/p5construct/construct_12_13.png}
+\centering
+    \includegraphics[width=12cm]{round2/p5construct/construct_12_13.png}
     \caption{Construction for when m is congruent to 0 mod 4 and n is congruent to 1 mod 4.}
     \label{fig:zerooneconstruct}
 \end{figure}
@@ -310,12 +312,37 @@ We now handle the case where $m \equiv 3 \mod 4$ and $n \equiv 2 \mod 4$ without
     For purposes of notation, let the set of points that we just selected in step 3 be denoted $U$. Notice that $\paren{1}+\paren{m+1+2k} = \paren{m+1+2k}+\paren{1}$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
 \end{enumerate}
 
-Figure \ref{fig:twothreeconstruct} shows how our construction is supposed to appear.
+Figure \ref{fig:twothreeconstruct} shows how our construction is supposed to appear (consider this to be more authoritative in case of any discrepancies).
 \begin{figure}[htbp]
-    \includegraphics[width=8cm]{round2/p5construct/construct_11_14.png}
+\centering
+    \includegraphics[width=12cm]{round2/p5construct/construct_11_14.png}
     \caption{Construction for when m is congruent to 3 mod 4 and n is congruent to 2 mod 4.}
     \label{fig:twothreeconstruct}
 \end{figure}
+
+\clearpage
+
+We also handle a special case where $n \equiv m \mod 4$ but in which $n=1$ or $m=1$. Without loss of generality, let $n=1$ (if the other case is true, just reflect the entire construction afterward).
+
+\begin{enumerate}
+    \item Select every point of the form $(k,m+1-k)$ for $1 \le k \le m$. Thus, the diagonal $x+y=m+1$ intersects an odd number of points. Furthermore, every horizontal and vertical line will intersect exactly one point from our set.
+    \item Select every point of the form $\paren{\frac{m+1}{2}, \frac{m+1}{2}+k}$ and $\paren{m, \frac{m+1}{2}+k}$ for $1 \le k \le \floor{\frac{m}{2}}$. Now, every horizontal line between $y=\frac{m+1}{2}$ and $y=m$ inclusive intersects exactly three points, and the vertical lines $X=\frac{m+1}{2}$ and $x=m$ both intersect an odd number of points. Furthermore, the other diagonals (other than $x+y=m+1$) now intersect exactly one point, so we are done.
+\end{enumerate}
+
+The construction is also visualized in Figure \ref{fig:131construct}.
+
+\begin{figure}[ht]
+\centering
+    \includegraphics[width=12cm]{round2/p5construct/construct_13_1.png}
+    \caption{Construction for $m=13$, $n=1$}
+    \label{fig:131construct}
+\end{figure}
+
+I also wrote a Python script to automate constructions (and check their correctness) with the source code listed below. Numpy and Matplotlib are required to run it.
+
+\clearpage
+
+\inputminted{python}{p5construct/algorithm.py}
 
 \end{solution}
 

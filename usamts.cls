@@ -10,6 +10,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[english]{babel}
 
+\usepackage{minted}
 \usepackage[pdftex]{graphicx}
 \usepackage[inline]{asymptote}
 \usepackage{amsmath,amssymb,amsthm}
@@ -86,7 +87,7 @@
 \usepackage[table]{xcolor}
 \usepackage{tabularray}
 \usepackage[colorlinks=true,pdfusetitle,pagebackref]{hyperref}
-\usepackage{floatrow} 
+%\usepackage{floatrow} 
   
 
 \usepackage{listings}
