@@ -84,7 +84,7 @@ drawEdge(3, 3, 5, 3, false);
 int[][] numbers = {
 {28, 22, 27},
 {23, 33, 35, 24},
-{10, 21, 25},
+{20, 21, 25},
 {30, 32}};
 
 drawCell(2, 0, numbers[3][0]);
@@ -181,11 +181,20 @@ Since $a_{0,0} + a_{0,9} + a_{9,0} \equiv 0 \mod 3$, they are balanced.
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
 \begin{figure}
-\includegraphics[width=12cm]{round2/p4diagram.png}
+\includegraphics[width=16cm]{round2/p4diagram.png}
 \caption{The Diagram}
 \end{figure}
 
-Note that $AFIE$ is a cyclic quadrilateral because $\angle IFA = \angle IEA = 90^\circ$. We therefore know that there is a spiral similarity that sends $\triangle FIE$ to $\triangle XIY$. Since $\triangle FIE$ is an isosceles triangle, so is $XIY$. Therefore, the midpoint of $XY$, which we denote $M$, is also the foot of the perpendicular from $I$ to $XY$. Since $\angle IEY = 90$ and $\angle IFX = 90^\circ$, It follows that $IEMY$ and $IFMX$ are cyclic quadrilaterals. Now, note that $\angle MFI = 180^\circ - \angle MXI = 180^\circ - \angle YXI = 180^\circ - \angle EFI$ by the spiral similarity from before. So, $M,E,F$ are collinear and we are done.
+For this proof, let $M$ denote the midpoint of $XY$. We should try to show that $M$, $F$, and $E$ are collinear.
+
+Note that $AFIE$ is a cyclic quadrilateral because $\angle IFA = \angle IEA = 90^\circ$. Therefore, $\triangle FIE \sim \triangle XIY$ by spiral similarity. Since $\triangle FIE$ is an isosceles triangle, $\triangle XIY$ is also isosceles and $IM \perp XY$. Since $\angle IMY = \angle IEY = 90^\circ$ and $\angle IMX = \angle IFX = 90^\circ$, $IEMY$ and $IFMX$ are both cyclic quadrilaterals. Now, we finish with angle chase.
+
+\begin{align*}
+    \angle MFI &= 180^\circ - \angle MXI \tag{$IFMX$ is a cyclic quadrilateral} \\
+    &= 180^\circ - \angle YXI \tag{$Y$, $M$, and $X$ are collinear in that order since $M$ is the midpoint of $XY$}\\
+    &= 180^\circ - \angle EFI \tag{$\triangle FIE \sim \triangle XIY$ by spiral similarity}
+\end{align*}
+This proves that $\angle MFI + \angle EFI = 180^\circ$, and therefore $M$, $F$, and $E$ are collinear. \hfill \qedsymbol
 \end{solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -194,15 +203,13 @@ Note that $AFIE$ is a cyclic quadrilateral because $\angle IFA = \angle IEA = 90
 %%%%%%%%%%                 %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
-This was quite a painful construction problem\dots
-
 The answer is all $n,m$ such that \fbox{$n+m \equiv 1 \mod 4$ or $n \equiv m \mod 4$}.
 
 \begin{claim}
     The above condition must hold.
 \end{claim}
 \begin{proof}
-    Let $T$ contain $l$ points of the form $(x_i,y_i)$.
+    Let $T$ contain points of the form $(x_i,y_i)$.
     $$\sum_i x_i + \sum_i y_i \equiv \sum_{k=1}^{m+n-1} 1 + \sum_{k=1}^{m+n-1} 1 \equiv 0 \mod 2$$
     $$\sum_i x_i + y_i \equiv \sum_{k=m+1}^{2m+n-1} 1 \equiv \frac{1}{2} \paren{m+n-1}\paren{3m+n} \mod 2$$
     Since $\paren{\sum_i x_i} + \paren{\sum_i y_i} = \sum_i \paren{x_i+y_i}$, $\frac{1}{2} (m+n-1)(3m+n)$ must be even to prevent a contradiction.
@@ -219,10 +226,33 @@ The answer is all $n,m$ such that \fbox{$n+m \equiv 1 \mod 4$ or $n \equiv m \mo
     \end{enumerate}
 }
 
-In the next few pages, we will show that there always exists a construction for the subset $T$ if $n+m \equiv 1 \mod 4$ or $n \equiv m \mod 4$.
+In the next few pages, we will show that this is a sufficient condition through a whole lot of casework. Note that we will be covering a lot of cases where we make a certain assumption that breaks the symmetry between $m$ and $n$ (without loss of generality). In those cases, we can construct the case for $(m',n') = (n,m)$ as follows:
+
+\begin{enumerate}
+    \item Figure out the points that would be present in the construction for $(m,n)$.
+    \item Reflect all points across the line $x+y=m+n$. So, $(x,y) \rightarrow \paren{n+m - y, n+m - x}$.
+\end{enumerate}
+
+Note that we can immediately deduce the following properties:
+
+\begin{enumerate}
+    \item $x_1 = x_2 \iff n+m-x_1 = n+m-x_2$
+    \item $y_1 = y_2 \iff n+m-y_1 = n+m-y_2$
+    \item $x_1 + y_1 = x_2 + y_2 \iff (n+m-x_1) + (n+m-y_1) = (n+m-x_2) + (n+m-y_2)$
+\end{enumerate}
+
+Furthermore, we get the following bounds:
+
+\begin{enumerate}
+    \item $1 \le x \le m+n-1 \iff 1 \le m+n-x \le n+m-1$
+    \item $1 \le y \le m+n-1 \iff 1 \le m+n-y \le n+m-1$
+    \item $m+1 \le x+y \le 2m+n-1 \iff n+1 \le (2m+2n) - (x+y) \le 2n+m-1$
+\end{enumerate}
+
+Therefore, when we flip $m$ and $n$ and apply this transformation to the points from our old construction, our new construction will still have an odd number of points on each row, column, and diagonal. Furthermore, all transformed points will be inside this new region.
 
 \clearpage
-We first handle the case where $n \equiv m \mod 4$. Without loss of generality, assume that $n \geq m$. If $m \geq n$, we can just reflect our current construction across the point $(m,m)$ and translate it accordingly. We then apply the following steps:
+We first handle the case where $n \equiv m \mod 4$. It is clear that either $n \geq m$ or $m \geq m$ Without loss of generality, assume that $n \geq m$.
 \begin{enumerate}
     \item Select the point $(m,m)$ if and only if $m$ is odd.
     \item \mainaxis
@@ -232,7 +262,7 @@ We first handle the case where $n \equiv m \mod 4$. Without loss of generality, 
         \item Select all the points of the form $(m+2k-1,m-2k+1)$ for $1 \leq k \leq \floor{\frac{m}{2}}$
         \item Select all the points of the form $(m-2k,m+2k)$ for $1 \leq k \leq \floor{\frac{m-1}{2}}$
     \end{enumerate}
-    After this process is done, the lines $x=m$, $y=m$, and $x+y = 2m$ will intersect $\floor{\frac{m-1}{2}} + \floor{\frac{n}{2}} + (m \mod 2)$, $\floor{\frac{n-1}{2}} + \floor{\frac{m}{2}} + (m \mod 2)$, and $\floor{\frac{m-1}{2}} + \floor{\frac{m}{2}} + (m \mod 2)$ points respectively. Since $m \equiv n \mod 4$, these expressions will all be odd. Furthermore, the lines $x=k$ for all $1 \leq k \leq 2m-1$ and $x=k$ for all $1 \leq k \leq 2m-1$ will all intersect exactly one point from our set.
+    After this process is done, the lines $x=m$, $y=m$, and $x+y = 2m$ will intersect $\floor{\frac{m-1}{2}} + \floor{\frac{n}{2}} + (m \mod 2)$, $\floor{\frac{n-1}{2}} + \floor{\frac{m}{2}} + (m \mod 2)$, and $\floor{\frac{m-1}{2}} + \floor{\frac{m}{2}} + (m \mod 2)$ points respectively (the $(m \mod 2)$ comes from whether we choose to include $(m,m)$ or not). Since $m \equiv n \mod 4$, these expressions will all be odd. Furthermore, the lines $x=k$ for all $1 \leq k \leq 2m-1$ and $x=k$ for all $1 \leq k \leq 2m-1$ will all intersect exactly one point from our set.
     \item Create a ``tail'' to cover all of the outer rows and columns:
     \begin{enumerate}
         \item Select all the points of the form $\paren{ m+2\floor{\frac{m}{2}}-1+2k, m-2\floor{\frac{m}{2}}+2 }$ for $1 \leq k \leq \frac{n-m}{2}$. This adds an even number of points since $m \equiv n \mod 4$, so the line $y = m-2\floor{\frac{m}{2}}+2$ still intersects an odd number of points.
@@ -240,25 +270,42 @@ We first handle the case where $n \equiv m \mod 4$. Without loss of generality, 
     \end{enumerate}
     With the addition of these points, all horizontal and vertical lines now intersect an odd number of points; all lines of the form $x = k$ for all $2m \leq k < m+n$ and $y=k$ for all $2m \leq k < m+n$ will also intersect exactly one point.
     
-    Let the set of points that we selected in Step 4 be denoted $U$. Notice that $\paren{ m+2\floor{\frac{m}{2}}-1+2k}+\paren{m-2\floor{\frac{m}{2}}+2} = \paren{m-2\floor{\frac{m-1}{2}}+1}+\paren{m+2\floor{\frac{m-1}{2}}+2k}$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
+    Let the set of points we selected in Step 4 be denoted $U$. Notice that $\paren{ m+2\floor{\frac{m}{2}}-1+2k}+\paren{m-2\floor{\frac{m}{2}}+2} = \paren{m-2\floor{\frac{m-1}{2}}+1}+\paren{m+2\floor{\frac{m-1}{2}}+2k} = 2m+2k+1$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
 \end{enumerate}
 
-Figure \ref{fig:congconstruct} shows how our construction is supposed to appear (consider this to be more authoritative in case of any discrepancies).
+Figure \ref{fig:congconstruct} shows how our construction is supposed to appear.
 
 \begin{figure}[htbp]
 \centering
     \begin{tabular}{c c}
-    \includegraphics[width=9cm]{round2/p5construct/construct_8_16.png}&
-    \includegraphics[width=9cm]{round2/p5construct/construct_9_17.png}\\
-    \includegraphics[width=9cm]{round2/p5construct/construct_6_14.png}&
-    \includegraphics[width=9cm]{round2/p5construct/construct_7_15.png}\\
+    \includegraphics[width=8cm]{round2/p5construct/construct_8_16.png}&
+    \includegraphics[width=8cm]{round2/p5construct/construct_9_17.png}\\
+    \includegraphics[width=8cm]{round2/p5construct/construct_6_14.png}&
+    \includegraphics[width=8cm]{round2/p5construct/construct_7_15.png}\\
     \end{tabular}
     \caption{Our construction method applied when m and n are congruent to (going from left to right, top to bottom) 0 mod 4, 1 mod 4, 2 mod 4, 3 mod 4}
     \label{fig:congconstruct}
 \end{figure}
 
 \clearpage
-We now handle the case where $m \equiv 0 \mod 4$ and $n \equiv 1 \mod 4$ without loss of generality. Again, if the reverse is true, reflect the entire construction across $(m,m)$; this entire problem is translation-independent. We then apply the following steps:
+
+However, note that the construction method above fails when $n=1$ or $m=1$. We will handle this special case right now. Without loss of generality, let $n=1$.
+
+\begin{enumerate}
+    \item Select every point of the form $(k,m+1-k)$ for $1 \le k \le m$. Thus, the diagonal $x+y=m+1$ intersects an odd number of points. Furthermore, every horizontal and vertical line will intersect exactly one point from our set.
+    \item Select every point of the form $\paren{\frac{m+1}{2}, \frac{m+1}{2}+k}$ and $\paren{m, \frac{m+1}{2}+k}$ for $1 \le k \le \floor{\frac{m}{2}}$. Now, every horizontal line between $y=\frac{m+1}{2}$ and $y=m$ inclusive intersects exactly three points, and the vertical lines $x=\frac{m+1}{2}$ and $x=m$ both intersect an odd number of points. All the other diagonals (other than $x+y=m+1$) also intersect exactly one point, so we are done.
+\end{enumerate}
+
+The construction is also visualized in Figure \ref{fig:131construct}.
+
+\begin{figure}[ht]
+\centering
+    \includegraphics[width=12cm]{round2/p5construct/construct_13_1.png}
+    \caption{Construction for $m=13$, $n=1$}
+    \label{fig:131construct}
+\end{figure}
+\clearpage 
+We now handle the case where $m \equiv 0 \mod 4$ and $n \equiv 1 \mod 4$ without loss of generality. The opposite case, where $m \equiv 1 \mod 4$ and $n \equiv 0 \mod 4$, can be solved using symmetry (as outlined in the first page).
 
 \begin{enumerate}
     \item Select the point $(m,m)$.
@@ -273,9 +320,9 @@ We now handle the case where $m \equiv 0 \mod 4$ and $n \equiv 1 \mod 4$ without
     \end{enumerate}
     With the addition of these points, all horizontal and vertical lines now intersect an odd number of points; all lines of the form $x = k$ and $y=k$ for all $m+1 \geq k < m+n$ will intersect exactly one point.
     
-    Let the set of points that we selected in Step 4 be denoted $U$. Notice that $\paren{2}+\paren{m+2k} = \paren{m+2k-1}+\paren{3}$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
+    Let the set of points we selected in Step 4 be denoted $U$. Notice that $\paren{2}+\paren{m+2k} = \paren{m+2k-1}+\paren{3}$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
 \end{enumerate}
-Figure \ref{fig:zerooneconstruct} shows how our construction is supposed to appear (consider this to be more authoritative in case of any discrepancies).
+Figure \ref{fig:zerooneconstruct} shows how our construction is supposed to appear.
 
 \begin{figure}[htbp]
 \centering
@@ -285,7 +332,7 @@ Figure \ref{fig:zerooneconstruct} shows how our construction is supposed to appe
 \end{figure}
 
 \clearpage
-We now handle the case where $m \equiv 3 \mod 4$ and $n \equiv 2 \mod 4$ without loss of generality (again, if the reverse is true, reflect the entire construction across $(m,m)$). We then apply the following steps:
+We now handle the case where $m \equiv 3 \mod 4$ and $n \equiv 2 \mod 4$ without loss of generality. The opposite case, where $m \equiv 2 \mod 4$ and $n \equiv 3 \mod 4$, can be solved using symmetry (as outlined in the first page).
 
 \begin{enumerate}
     \item Use the construction for when $n=2$
@@ -309,40 +356,16 @@ We now handle the case where $m \equiv 3 \mod 4$ and $n \equiv 2 \mod 4$ without
     \end{enumerate}
     After adding these points, every line of the form $x=k$ and $y=k$ where $m+3 \leq k \leq m+n-1$ will intersect exactly one point in our set.
     
-    For purposes of notation, let the set of points that we just selected in step 3 be denoted $U$. Notice that $\paren{1}+\paren{m+1+2k} = \paren{m+1+2k}+\paren{1}$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
+    For notation purposes, let the set of points we just selected in step 3 be denoted $U$. Notice that $\paren{1}+\paren{m+1+2k} = \paren{m+1+2k}+\paren{1}$. So, every time a line of the form $x+y=c$ for some constant $c$ intersects an element of $U$, it intersects exactly two elements of $U$. So all diagonal lines will continue to intersect an odd number of elements.
 \end{enumerate}
 
-Figure \ref{fig:twothreeconstruct} shows how our construction is supposed to appear (consider this to be more authoritative in case of any discrepancies).
+Figure \ref{fig:twothreeconstruct} shows how our construction is supposed to appear.
 \begin{figure}[htbp]
 \centering
     \includegraphics[width=12cm]{round2/p5construct/construct_11_14.png}
     \caption{Construction for when m is congruent to 3 mod 4 and n is congruent to 2 mod 4.}
     \label{fig:twothreeconstruct}
 \end{figure}
-
-\clearpage
-
-We also handle a special case where $n \equiv m \mod 4$ but in which $n=1$ or $m=1$. Without loss of generality, let $n=1$ (if the other case is true, just reflect the entire construction afterward).
-
-\begin{enumerate}
-    \item Select every point of the form $(k,m+1-k)$ for $1 \le k \le m$. Thus, the diagonal $x+y=m+1$ intersects an odd number of points. Furthermore, every horizontal and vertical line will intersect exactly one point from our set.
-    \item Select every point of the form $\paren{\frac{m+1}{2}, \frac{m+1}{2}+k}$ and $\paren{m, \frac{m+1}{2}+k}$ for $1 \le k \le \floor{\frac{m}{2}}$. Now, every horizontal line between $y=\frac{m+1}{2}$ and $y=m$ inclusive intersects exactly three points, and the vertical lines $X=\frac{m+1}{2}$ and $x=m$ both intersect an odd number of points. Furthermore, the other diagonals (other than $x+y=m+1$) now intersect exactly one point, so we are done.
-\end{enumerate}
-
-The construction is also visualized in Figure \ref{fig:131construct}.
-
-\begin{figure}[ht]
-\centering
-    \includegraphics[width=12cm]{round2/p5construct/construct_13_1.png}
-    \caption{Construction for $m=13$, $n=1$}
-    \label{fig:131construct}
-\end{figure}
-
-I also wrote a Python script to automate constructions (and check their correctness) with the source code listed below. Numpy and Matplotlib are required to run it.
-
-\clearpage
-
-\inputminted{python}{p5construct/algorithm.py}
 
 \end{solution}
 
