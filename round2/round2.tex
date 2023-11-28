@@ -118,7 +118,7 @@ For our base case, $a_1 = 1$ because the only possible code is having all the di
     $$a_n = n^6 - \sum_{k=1}^{n-1} \binom{n}{k} a_k$$
 \end{claim}
 \begin{proof}
-    The reasoning is fairly straightforward. The number of combinations where we use at most $n$ of our allotted digits is $n^6$. Now, we just need to remove the cases where we're not using all $n$ digits. There are $\binom{n}{k} a_k$ ways in which we can first choose a subset of $k$ digits and then make a string using all $k$ digits at least once.
+    The reasoning is fairly straightforward. The number of combinations where we use at most $n$ of our allotted digits is $n^6$. Now, we just need to remove the cases where we're not using all $n$ digits. There are $\binom{n}{k} a_k$ ways in which we can first choose a subset of $k$ digits and then make a string using all $k$ digits at least once. We're basically counting through all of the \textit{sub-smudge patterns}.
 \end{proof}
 \begin{align*}
 a_2 &= 2^6 - \binom{2}{1} \cdot a_1 = 62\\
@@ -141,7 +141,7 @@ It is clear from these calculations that we get the most possible combinations w
 \begin{solution}
 Note that a set of three numbers is \textit{balanced} if and only if their sum is congruent to 0 mod 3.
 
-We establish a coordinate system before proceeding. The rows will be 0-indexed from bottom to top. So, the top row will be row 9, while the bottom row will be row 0. We will also 0-index each hexagon on each row going from left to right. So, $a_{i,j}$ is the $j+1$th hexagon on the $i+1$th row from the bottom.
+We establish a coordinate system before proceeding. The rows will be 0-indexed from bottom to top. So, the top row will be row 9, while the bottom row will be row 0. We will also 0-index each hexagon on each row going from left to right. So, $a_{i,j}$ is the $j+1$th hexagon on the $i+1$th row from the bottom. Thus, the leftmost hexagon is $a_{0,0}$, the rightmost hexagon is $a_{0,9}$, and the topmost hexagon is $a_{9,0}$. We would like to prove that $a_{0,0} + a_{0,9} + a_{9,0} \equiv 0 \pmod{3}$
 
 We start by independently filling in the bottom numbers such that they take the values $a_{0,0} \dots a_{0,9}$ going from left to right. We can freely choose each number because no three hexagons on the bottom row are mutually adjacent.
 
@@ -151,8 +151,8 @@ This is easy to see by induction. The base case, for row 0, is trivial. For the 
 \begin{align*}
     a_{i,j} &\equiv -\paren{a_{i-1,j}+a_{i-1,j+1}} \mod 3\\
             &\equiv (-1)^{i} \paren{\sum_{k=0}^{i-1} \binom{i-1}{k} a_{0,j+k} + \sum_{k=0}^{i-1} \binom{i-1}{k} a_{0,j+1+k}} \mod 3\\
-            &\equiv (-1)^{i}\paren{a_{0,j} + a_{0,i+j} + \sum_{k=0}^{i-2} \paren{\binom{i-1}{k} + \binom{i-1}{k+1}} a_{0,j+k+1} } \mod 3\\
-            &\equiv (-1)^{i}\paren{a_{0,j} + a_{0,i+j} + \sum_{k=1}^{i-1} \binom{i}{k} a_{0,j+k} } \tag{hockey stick} \mod 3\\
+            &\equiv (-1)^{i}\paren{a_{0,j} + a_{0,i+j} + \sum_{k=1}^{i-1} \paren{\binom{i-1}{k-1} + \binom{i-1}{k}} a_{0,j+k} } \mod 3\\
+            &\equiv (-1)^{i}\paren{\binom{i}{0}a_{0,j} + \binom{i}{i}a_{0,i+j} + \sum_{k=1}^{i-1} \binom{i}{k} a_{0,j+k} } \tag{hockey stick} \mod 3\\
             &\equiv (-1)^{i} \sum_{k=0}^{i} \binom{i}{k} a_{0,j+k} \mod 3\\
 \end{align*}
 
@@ -169,7 +169,7 @@ So it is clear that
     &\equiv -\paren{a_{0,0} + a_{0,9}} \mod 3\\
 \end{align*}
 
-Since $a_{0,0} + a_{0,9} + a_{9,0} \equiv 0 \mod 3$, they are balanced.
+Since $a_{0,0} + a_{0,9} + a_{9,0} \equiv 0 \mod 3$, they are balanced, as the problem wants us to prove. \hfill \qedsymbol
 
 \end{solution}
 
@@ -185,9 +185,9 @@ Since $a_{0,0} + a_{0,9} + a_{9,0} \equiv 0 \mod 3$, they are balanced.
 \caption{The Diagram}
 \end{figure}
 
-For this proof, let $M$ denote the midpoint of $XY$. We should try to show that $M$, $F$, and $E$ are collinear.
+For this proof, let $M$ denote the midpoint of $XY$. The problem asks us to prove that $M$, $F$, and $E$ are collinear.
 
-Note that $AFIE$ is a cyclic quadrilateral because $\angle IFA = \angle IEA = 90^\circ$. Therefore, $\triangle FIE \sim \triangle XIY$ by spiral similarity. Since $\triangle FIE$ is an isosceles triangle, $\triangle XIY$ is also isosceles and $IM \perp XY$. Since $\angle IMY = \angle IEY = 90^\circ$ and $\angle IMX = \angle IFX = 90^\circ$, $IEMY$ and $IFMX$ are both cyclic quadrilaterals. Now, we finish with angle chase.
+Note that $AFIE$ is a cyclic quadrilateral because $\angle IFA = \angle IEA = 90^\circ$. Therefore, $\triangle FIE \sim \triangle XIY$ by spiral similarity. Since $\triangle FIE$ is an isosceles triangle, $\triangle XIY$ is also isosceles and therefore $IM \perp XY$. Since $\angle IMY = \angle IEY = 90^\circ$ and $\angle IMX = \angle IFX = 90^\circ$, $IEMY$ and $IFMX$ are both cyclic quadrilaterals. Now, we finish with angle chase.
 
 \begin{align*}
     \angle MFI &= 180^\circ - \angle MXI \tag{$IFMX$ is a cyclic quadrilateral} \\
@@ -226,6 +226,8 @@ The answer is all $n,m$ such that \fbox{$n+m \equiv 1 \mod 4$ or $n \equiv m \mo
     \end{enumerate}
 }
 
+\section*{Symmetry}
+
 In the next few pages, we will show that this is a sufficient condition through a whole lot of casework. Note that we will be covering a lot of cases where we make a certain assumption that breaks the symmetry between $m$ and $n$ (without loss of generality). In those cases, we can construct the case for $(m',n') = (n,m)$ as follows:
 
 \begin{enumerate}
@@ -252,6 +254,7 @@ Furthermore, we get the following bounds:
 Therefore, when we flip $m$ and $n$ and apply this transformation to the points from our old construction, our new construction will still have an odd number of points on each row, column, and diagonal. Furthermore, all transformed points will be inside this new region.
 
 \clearpage
+\section*{Congruent to Mod 4}
 We first handle the case where $n \equiv m \mod 4$. It is clear that either $n \geq m$ or $m \geq m$ Without loss of generality, assume that $n \geq m$.
 \begin{enumerate}
     \item Select the point $(m,m)$ if and only if $m$ is odd.
@@ -288,8 +291,25 @@ Figure \ref{fig:congconstruct} shows how our construction is supposed to appear.
 \end{figure}
 
 \clearpage
+\section*{n=2 Works Fine}
+Also, our construction method magically continues to work when $n = 2$ or $m = 2$. Since all of our reasoning from before is still valid, we just need to make sure that our points are still in bounds.
 
-However, note that the construction method above fails when $n=1$ or $m=1$. We will handle this special case right now. Without loss of generality, let $n=1$.
+When we execute step 4 part a, we are adding points of the form $(3+2k, 2)$. Note that $$3+2k \leq 3 + n - m = n + 1$$ So, we are still very much in bounds.
+
+When we are executing step 4 part b, we are adding points of the form $(3,2+2k)$. Note that
+$$3 + 2 + 2k \leq 3 + 2 + n-m = 3 + n \leq 2m+n-1 = n+3$$
+
+\begin{figure}[ht]
+\centering
+    \includegraphics[width=12cm]{round2/p5construct/construct_2_14.png}
+    \caption{Construction for $m=2$, $n=14$}
+    \label{fig:131construct}
+\end{figure}
+
+\clearpage
+\section*{Special Case of Congruent to Mod 4}
+
+However, note that the construction method above fails when $n=1$ or $m=1$ because some of the points start to go out of bounds. We will handle this special case right now. Without loss of generality, let $n=1$.
 
 \begin{enumerate}
     \item Select every point of the form $(k,m+1-k)$ for $1 \le k \le m$. Thus, the diagonal $x+y=m+1$ intersects an odd number of points. Furthermore, every horizontal and vertical line will intersect exactly one point from our set.
@@ -305,6 +325,7 @@ The construction is also visualized in Figure \ref{fig:131construct}.
     \label{fig:131construct}
 \end{figure}
 \clearpage 
+\section*{First Case of Summing to 1 Mod 4}
 We now handle the case where $m \equiv 0 \mod 4$ and $n \equiv 1 \mod 4$ without loss of generality. The opposite case, where $m \equiv 1 \mod 4$ and $n \equiv 0 \mod 4$, can be solved using symmetry (as outlined in the first page).
 
 \begin{enumerate}
@@ -331,17 +352,25 @@ Figure \ref{fig:zerooneconstruct} shows how our construction is supposed to appe
     \label{fig:zerooneconstruct}
 \end{figure}
 
+\begin{figure}[htbp]
+\centering
+    \includegraphics[width=8cm]{round2/p5construct/construct_4_1.png}
+    \includegraphics[width=8cm]{round2/p5construct/construct_4_5.png}
+    \caption{Our construction also easily covers the corner cases for the smallest possible values of $m$ and $n$. There are no out-of-bounds errors.}
+\end{figure}
+
 \clearpage
+\section*{Second Case of Summing to 1 Mod 4}
 We now handle the case where $m \equiv 3 \mod 4$ and $n \equiv 2 \mod 4$ without loss of generality. The opposite case, where $m \equiv 2 \mod 4$ and $n \equiv 3 \mod 4$, can be solved using symmetry (as outlined in the first page).
 
 \begin{enumerate}
     \item Use the construction for when $n=2$
     \begin{enumerate}
-        \item Select every point such that $x+y = m+1$.
-        \item Select every point on the segment from $\paren{\frac{m+1}{2}, \frac{m+1}{2}}$ to $\paren{\frac{m+1}{2}, m+1}$ inclusive.
-        \item Select every point on the segment from $\paren{m+1, \frac{m+1}{2}+1}$ to $\paren{m+1, m}$ inclusive.
+        \item Select every point inside $S$ such that $x+y = m+1$.
+        \item Select every lattice point on the segment from $\paren{\frac{m+1}{2}, \frac{m+1}{2}}$ to $\paren{\frac{m+1}{2}, m+1}$ inclusive.
+        \item Select every lattice point on the segment from $\paren{m+1, \frac{m+1}{2}+1}$ to $\paren{m+1, m}$ inclusive.
     \end{enumerate}
-    The line $x+y=m+1$ intersects $m \equiv 1 \mod 2$ points. All other lines of the form $x+y=k$ for $m+1 < k \leq 2m+1$ intersect exactly one point each. The lines $x=\frac{m+1}{2}$ and $x=m+1$ will intersect $\frac{m+3}{2}$ and $\frac{m-1}{2}$ points respectively, which are both odd; all \textbf{other} lines of the form $x=k$ for $0 < k \leq m+1$ intersect exactly one point, which itself will be on the diagonal of $x+y=m+1$. The lines $y=m+1$ and $y=k$ for $1 \leq k \leq \frac{m-1}{2}$ intersect exactly one point, while the lines $y=k$ for $\frac{m+3}{2} \leq k \leq m$ will intersect three points.
+    The line $x+y=m+1$ intersects $m$ points, which is clearly odd. All other lines of the form $x+y=k$ for $m+1 < k \leq 2m+1$ intersect exactly one point each. The lines $x=\frac{m+1}{2}$ and $x=m+1$ will intersect $\frac{m+3}{2}$ and $\frac{m-1}{2}$ points respectively, which are both odd; all \textbf{other} lines of the form $x=k$ for $0 < k \leq m+1$ intersect exactly one point, which itself will be on the diagonal of $x+y=m+1$. The lines $y=m+1$ and $y=k$ for $1 \leq k \leq \frac{m-1}{2}$ intersect exactly one point, while the lines $y=k$ for $\frac{m+3}{2} \leq k \leq m$ will intersect three points.
     \item Extend the construction to hit all the diagonals.
     \begin{enumerate}
         \item Select every point of the form $(m+1, m+2k)$ for $1 \leq k \leq \frac{n-2}{2}$.
@@ -351,8 +380,8 @@ We now handle the case where $m \equiv 3 \mod 4$ and $n \equiv 2 \mod 4$ without
     Furthermore, the lines $x=m+1$ and $y=m$ will each intersect $\frac{n-2}{2}$ extra points, which is even.
     \item Complete the construction for all the new rows and columns.
     \begin{enumerate}
-        \item Select every point of the form $(1, m+1+2k)$ for $1 \leq k \leq \frac{n-2}{2}$.
-        \item Select every point of the form $(m+1+2k, 1)$ for $1 \leq k \leq \frac{n-2}{2}$.
+        \item Select every lattice point of the form $(1, m+1+2k)$ for $1 \leq k \leq \frac{n-2}{2}$.
+        \item Select every lattice point of the form $(m+1+2k, 1)$ for $1 \leq k \leq \frac{n-2}{2}$.
     \end{enumerate}
     After adding these points, every line of the form $x=k$ and $y=k$ where $m+3 \leq k \leq m+n-1$ will intersect exactly one point in our set.
     
@@ -366,6 +395,13 @@ Figure \ref{fig:twothreeconstruct} shows how our construction is supposed to app
     \caption{Construction for when m is congruent to 3 mod 4 and n is congruent to 2 mod 4.}
     \label{fig:twothreeconstruct}
 \end{figure}
+
+\clearpage
+\section*{Verification Script}
+
+I have also created a python script, which depends on the latest versions of matplotlib and numpy for graphing, that can visualize all of these constructions. In fact, all of the pictures from above were made and verified to be correct by this script.
+
+\inputminted{python}{p5construct/algorithm.py}
 
 \end{solution}
 
