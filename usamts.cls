@@ -72,6 +72,7 @@
 \newcommand{\ZZ}{\mathbb{Z}}
 \newcommand{\QQ}{\mathbb{Q}}
 \newcommand{\RR}{\mathbb{R}}
+\newcommand{\CC}{\mathbb{C}}
 
 \newcommand{\paren}[1]{\left( #1 \right)}
 \newcommand{\floor}[1]{\left\lfloor #1 \right\rfloor}
