@@ -87,18 +87,31 @@ drawSolNum(i,j,numbers[5-j][i]);
 
 \begin{solution}
 
-Without loss of generality, let $a=1$. Then there are no interior points, so the problem condition cannot hold. Thus, we can assume $a,b,c \geq 2$.
+Without loss of generality, let $a=1$. Then there are no interior cubes, so the problem condition cannot hold. Thus, we can assume $a,b,c \geq 2$.
 
-The number of unpainted cells is $(a-2)(b-2)(c-2)$. There are clearly $2 \cdot \paren{(a-2)(b-2)+(b-2)(c-2)+(a-2)(c-2)}$ cells that are painted exactly once, $4 \cdot \paren{(a-2)+(b-2)+(c-2)}$ cells that are painted exactly twice, and $8$ corners which are each painted thrice.
+The number of unpainted cubes is $(a-2)(b-2)(c-2)$. There are clearly $2 \cdot \paren{(a-2)(b-2)+(b-2)(c-2)+(a-2)(c-2)}$ cubes that are painted exactly once, $4 \cdot \paren{(a-2)+(b-2)+(c-2)}$ cubes that are painted exactly twice, and $8$ corners which are each painted thrice.
 
-The problem asks us to find all $a,b,c$ such that $5(a-2)(b-2)(c-2) = abc$. Without loss of generality, let $a \le b \le c$.
-Rearranging some of the terms, we get that $\frac{5(a-2)}{a} = \frac{b}{b-2} \cdot \frac{c}{c-2} \le \frac{b^2}{(b-2)^2}$.
+The problem asks us to find all $a,b,c$ such that $5(a-2)(b-2)(c-2) = abc$, since the probability that an unpainted cube is picked should be 20\%. Without loss of generality, let $a \le b \le c$. Rearranging some of the terms, we get that $\frac{5(a-2)}{a} = \frac{b}{b-2} \cdot \frac{c}{c-2} \le \frac{b^2}{(b-2)^2}$.
 
-We now observe that $a$ is upper bounded by 4. Consider if this were not the case; $3 \le \frac{5(a-2)}{a}$ and $\frac{b^2}{(b-2)^2} \le \frac{25}{9} < 3$. So, the above inequality cannot hold, which is a contradiction.
+\begin{claim}
+    For $x \ge 3$, $f(x) = \frac{x-2}{x}$ is strictly increasing.
+\end{claim}
+\begin{proof}
+\[ x < y \implies \frac{2}{x} > \frac{2}{y} \implies 1-\frac{2}{x} < 1 - \frac{2}{y}\]
+\end{proof}
 
-Consider the case where $a=3$. Then $b \leq 8$. Consider if this were not the case; $\frac{5(a-2)}{a} = \frac{5}{3}$ but $\frac{b^2}{(b-2)^2} \leq \frac{9^2}{7^2} < \frac{5}{3}$, which contradicts our original inequality condition.
+\begin{claim}
+    For $x \ge 3$, $f(x) = \frac{x^2}{(x-2)^2}$ is strictly decreasing.
+\end{claim}
+\begin{proof}
+Since $\frac{x-2}{x}$ is strictly increasing and strictly less than 1, it follows that $\frac{x}{x-2} > 1$ and is strictly decreasing. Furthermore, $\frac{x^2}{(x-2)^2}$ is also strictly decreasing by this condition.
+\end{proof}
 
-Consider the case where $a=4$. Then $b \leq 5$. Consider if this were not the case; $\frac{5(a-2)}{a} = \frac{5}{2}$ but $\frac{b^2}{(b-2)^2} \leq \frac{6^2}{4^2} < \frac{5}{2}$, which contradicts our original inequality condition.
+We claim that $a$ is upper bounded by 4. Consider if this were not the case; $3 \le \frac{5(a-2)}{a}$ and $\frac{b^2}{(b-2)^2} \le \frac{25}{9} < 3$. So, the above inequality cannot hold, which is a contradiction.
+
+If $a=3$, then we claim that $b \leq 8$. Consider if this were not the case; $\frac{5(a-2)}{a} = \frac{5}{3}$ but $\frac{b^2}{(b-2)^2} \leq \frac{9^2}{7^2} < \frac{5}{3}$, which contradicts our original inequality.
+
+If $a=4$, we claim that $b \leq 5$. Consider if this were not the case; $\frac{5(a-2)}{a} = \frac{5}{2}$ but $\frac{b^2}{(b-2)^2} \leq \frac{6^2}{4^2} < \frac{5}{2}$, which contradicts our original inequality.
 
 Now, we are left with a finite case check:
 
@@ -135,10 +148,11 @@ Call a game state \textit{maintainable} if either:
     \item $a = 1$ and $b \equiv 1 \pmod 3$
     \item $a = 0$ and $b \equiv 0 \pmod 3$
 \end{enumerate}
+Note that the losing state of $(0,0)$ is \textit{maintainable}.
 
-Note that the ultimate losing game state, $(0,0)$ is maintainable. Now, the pith of our solution is the following lemma:
+The pith of our solution is the following lemma:
 \begin{claim}
-    Without loss of generality, let it be Lizzy's turn. If the game state is \textit{maintainable}, Alex, no matter what legal move Lizzy plays, can always make the game state \textit{maintainable} after his turn.
+    Without loss of generality, let it be Lizzy's turn. If the game state is \textit{maintainable}, Alex, no matter what legal move Lizzy plays, can always make the game state \textit{maintainable} after his turn. Furthermore, Lizzy cannot keep the game state \textit{maintainable} on her turn.
 \end{claim}
 \begin{proof}
     First, we case bash on Lizzy's moves when the game state is denoted as $(1, 3m+1)$ for some non-negative integer $m$.
@@ -166,11 +180,13 @@ Note that the ultimate losing game state, $(0,0)$ is maintainable. Now, the pith
         \item She decrements $3n+1$ twos; the game state is then $(3n+1, 3(m-n)-1)$. Alex can decrement all of the ones and decrement a two, turning the game state into $(1, 3(m-n)-2)$.
         \item She decrements $3n+2$ twos; the game state is then $(3n+2, 3(m-n)-2)$. Alex can decrement all but a single one, turning the game state into $(1, 3(m-n)-2)$.
     \end{itemize}
+
+    So, Alex always has a move to ensure the game state is \textit{maintainable}. The case bash also shows that any legal move that Lizzy can make will never result in a \textit{maintainable state}
 \end{proof}
 
-Note that both the number of twos and the sum of all the numbers in the game are strictly decreasing monovariants. From the case bash we just did, it is also apparent that the other player will never be on a \textit{maintainable} state. Therefore, the sum of all numbers in the game will eventually go to zero, and it will then be the turn of the player on the \textit{maintainable} state, at which point they lose. If the state it \textit{maintainable} on a player's turn, they are on a death spiral.
+Note that both the number of twos and the sum of all the numbers in the game are strictly decreasing monovariants. Therefore, the sum of all numbers in the game will eventually go to zero, and when it does, it  will be the turn of the player on the \textit{maintainable} state. Therefore, if the state is \textit{maintainable} on a player's turn, their opponent has a rock-solid strategy to keep the player's game state \textit{maintainable}, and so they will lose.
 
-Now, if $n$ is a multiple of 3, Lizzy is already on this death spiral, and therefore she will lose. If $n$ is not, Lizzy can make one of the following two moves to force Alex onto the death spiral:
+Now, if $n$ is a multiple of 3, Lizzy starts the game on a \textit{maintainable} game state, so Alex has a winning strategy. If $n$ is not, Lizzy can make one of the following two moves to force Alex to play on a \textit{maintainable} state:
 
 \begin{itemize}
     \item If $n = 3k+1$; Lizzy can delete a two, turning the game state from $(0, 3k+1)$ to $(0, 3k)$.
@@ -186,8 +202,7 @@ Now, if $n$ is a multiple of 3, Lizzy is already on this death spiral, and there
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
 
-We first solve \textbf{Part a}, for which the statement is \fbox{true}. It is well-known that the cardinality of $\RR^n$ is the same as the cardinality of any open interval $(a,b)$ on the real line. Therefore, there exists some bijection which maps $\RR^2$ to $(0,2\pi)$. We can then map elements on $(0,2\pi)$ to a unique point on the unit circle of the complex plane: $x \hookrightarrow e^{xi}$. Any polygon with vertices on this unit circle, if it is not self-intersecting, is immediately convex. Therefore, any polygon on our original plane will get mapped to a convex polygon which is not degenerate (because of injectivity).
-
+We first solve \textbf{Part a}, for which the statement is \fbox{true}. It is well-known that the cardinality of $\RR^n$ is the same as the cardinality of any open interval $(a,b)$ on the real line. Therefore, there exists some bijection which maps $\RR^2$ to $(0,2\pi)$. We can then map elements on $(0,2\pi)$ to a unique point on the unit circle of the complex plane: $x \hookrightarrow e^{xi}$. Any polygon with vertices on this unit circle, if it is not self-intersecting, is immediately convex. Therefore, any polygon on our original plane will get mapped to a convex polygon which is not degenerate (guaranteed because of the injectivity of our map). 
 
 We now solve \textbf{Part b}, for which the statement is \fbox{false}. We will consider a regular 1001-gon with all points on the unit circle. Any polygon that is generated with a subset of the vertices of this 1001-gon, assuming no self-intersections, is also convex.
 \begin{claim}
@@ -204,17 +219,78 @@ We now solve \textbf{Part b}, for which the statement is \fbox{false}. We will c
     Assume for the sake of contradiction that this was not true. Then, there exists a point $x$ such that at least 5 vertices of our 1001-gon map to it. Now, consider the set of all vertices $v$ such that $f(v) = x$, which we denote as $V$. The points in $V$ form a convex polygon with at least 5 sides, but the image of $V$ is a single point, which is a degenerate polygon.
 \end{proof}
 
-Therefore, we can find points $A$, $B$, $C$, $D$, $E$, and $F$ such that they all map to different points under $f$. Without loss of generality, let $A^*$, $B^*$, and $C^*$ be the points on the convex hull of the image of $ABCDEF$ (By our previous claim, these are the only points on the convex hull). Then, $D^*$, $E^*$, and $F^*$ must be points inside this convex hull. Consider the following diagram:
+Therefore, we can find points $A$, $B$, $C$, $D$, $E$, and $F$ such that they all map to different points under $f$. Without loss of generality, let $A^*$, $B^*$, and $C^*$ be the points on the convex hull of the image of $ABCDEF$ (By our previous claim, these are the only points on the convex hull). Then, $D^*$, $E^*$, and $F^*$ must be points inside this convex hull. 
+
+If $D^*$, $E^*$, and $F^*$ are collinear, then $A^*D^*E^*F^*$ will either be a triangle with all points on the convex hull (so it is not concave) or all four points will be collinear, in which case they will form a degenerate quadrilateral.
+
+So, we can assume that $D^*E^*F^*$ is a non-degenerate triangle. Consider the following diagram:
 
 \begin{center}
-    \includegraphics[width=8cm]{round3/p4diagram.jpeg}
+    \begin{asy}
+size(8cm,0);
+import graph;
+defaultpen(fontsize(6pt));
+
+pair D = (2,4),E = (0,0),F = (5,0);
+
+void drawDiag(pair D, pair E, pair F) {
+    label("$D^*$", D, dir(20), p=blue);
+    label("$E^*$", E, 2*dir(210), p=blue);
+    label("$F^*$", F, 2.5*dir(-25), p=blue);
+    draw(D--E--F--cycle);
+    draw((2E-D)--(2D-E));
+    draw((2F-E)--(2E-F));
+    draw((2D-F)--(2F-D));
+    
+    label("$1$", (5D-E-F)/3, p=fontsize(10pt)+deepblue);
+    label("$3$", (5E-F-D)/3, p=fontsize(10pt)+deepblue);
+    label("$5$", (5F-D-E)/3, p=fontsize(10pt)+deepblue);
+    label("$2$", (3D+3E-2F)/4, p=fontsize(10pt)+deepblue);
+    label("$4$", (3E+3F-2D)/4, p=fontsize(10pt)+deepblue);
+    label("$6$", (3D+3F-2E)/4, p=fontsize(10pt)+deepblue);
+    label("$7$", (D+E+F)/3, p=fontsize(10pt)+deepblue);
+}
+drawDiag(D,E,F);
+    \end{asy}
 \end{center}
 
 Because $A^*$ is part of the convex hull, it cannot be inside region 7, in which case it would fail to be part of the convex hull. The same reasoning applies for $B^*$ and $C^*$.
 
-If $A^*$ (and likewise for $B^*$ and $C^*$) is on regions 2, 4, or 6, we claim that $D^*E^*F^*A^*$ will be a convex quadrilateral under some permutation. Without loss of generality, let $A^*$ lie on region 2, as shown in the diagram below. Then, points $D^*$ and $E^*$ lie on opposite sides of the line $A^*F^*$ or on it. $A^*$ also lies either on the line $D^*E^*$ or on the opposite side from $F^*$. Therefore, the quadrilateral $E^*A^*D^*F^*$ is convex.
+If $A^*$ (and likewise for $B^*$ and $C^*$) is on regions 2, 4, or 6, we claim that $D^*E^*F^*A^*$ will be a convex quadrilateral under some permutation. Without loss of generality, let $A^*$ lie on region 2, as shown in the diagram below. Then, points $D^*$ and $E^*$ lie on opposite sides of the line $A^*F^*$ or on it. $A^*$ also lies either on the line $D^*E^*$ or on the opposite side from $F^*$. Therefore, the quadrilateral $E^*A^*D^*F^*$ is not concave.
+
+
 \begin{center}
-    \includegraphics[width=8cm]{round3/p4diagram_3.jpeg}
+\begin{asy}
+size(8cm,0);
+import graph;
+defaultpen(fontsize(6pt));
+
+pair D = (2,4),E = (0,0),F = (5,0);
+label("$D^*$", D, dir(20), p=blue);
+label("$E^*$", E, 2*dir(210), p=blue);
+label("$F^*$", F, 2.5*dir(-25), p=blue);
+
+pair A = (-4,1);
+dot(A, red);
+fill(F--D--A--E--cycle, palecyan);
+label("$A^*$", A, 2*dir(120), p=red);
+
+draw((2E-D)--(2D-E));
+draw((2F-E)--(2E-F));
+draw((2D-F)--(2F-D));
+
+label("$1$", (5D-E-F)/3, p=fontsize(10pt));
+label("$3$", (5E-F-D)/3, p=fontsize(10pt));
+label("$5$", (5F-D-E)/3, p=fontsize(10pt));
+label("$2$", (3D+3E-2F)/4, p=fontsize(10pt));
+label("$4$", (3E+3F-2D)/4, p=fontsize(10pt));
+label("$6$", (3D+3F-2E)/4, p=fontsize(10pt));
+label("$7$", (D+E+F)/3, p=fontsize(10pt));
+
+draw(D--E,red);
+draw(A--F,red);
+draw(F--D--A--E--cycle, deepgreen);
+\end{asy}
 \end{center}
 
 We can now assume that points $A^*$, $B^*$, and $C^*$ will only occupy regions 1,3, or 5.
@@ -224,10 +300,45 @@ If $A^*$, $B^*$, and $C^*$ all reside on one of these regions, say region 1, the
 This means that at least two of the regions need to be occupied. Without loss of generality, assume that $A^*$ is in region 1 and $B^*$ is in region 3. Then, $A^*D^*E^*B^*$ is a convex quadrilateral. In particular, points $D^*$ and $B^*$ must be on opposite sides of the line $A^*E^*$ or on the line, and points $A^*$ and $E^*$ need to be on opposite sides of the line $B^*D^*$ or on the line. Therefore, this quadrilateral cannot be concave.
 
 \begin{center}
-    \includegraphics[width=8cm]{round3/p4diagram_2.jpeg}
+\begin{asy}
+size(8cm,0);
+import graph;
+import math;
+defaultpen(fontsize(6pt));
+
+pair D = (2,4),E = (0,0),F = (5,0);
+label("$D^*$", D, dir(20), p=blue);
+label("$E^*$", E, 2*dir(210), p=blue);
+label("$F^*$", F, 2.5*dir(-25), p=blue);
+
+pair A = (1,6);
+pair B = (-2,-2);
+dot(A, red);
+dot(B, red);
+fill(A--D--E--B--cycle, palecyan);
+label("$A^*$", A, 2*dir(120), p=red);
+label("$B^*$", B, 2*dir(180), p=red);
+
+draw((2E-D)--(2D-E));
+draw((2F-E)--(2E-F));
+draw((2D-F)--(2F-D));
+
+label("$1$", (5D-E-F)/3, p=fontsize(10pt));
+label("$3$", (5E-F-D)/3, p=fontsize(10pt));
+label("$5$", (5F-D-E)/3, p=fontsize(10pt));
+label("$2$", (3D+3E-2F)/4, p=fontsize(10pt));
+label("$4$", (3E+3F-2D)/4, p=fontsize(10pt));
+label("$6$", (3D+3F-2E)/4, p=fontsize(10pt));
+label("$7$", (D+E+F)/3, p=fontsize(10pt));
+
+drawline(A, E, red);
+drawline(B, D, red);
+draw(A--D--E--B--cycle, deepgreen);
+
+\end{asy}
 \end{center}
 
-Therefore, there will always exist a convex quadrilateral whose image under $f$ is a convex quadrilateral.
+Therefore, there will always exist a convex quadrilateral whose image under $f$ is a non-concave quadrilateral.
 \hfill\qed
 \end{solution}
 
@@ -276,10 +387,55 @@ The problem now finishes with the following claim:
     All points on the open unit disk are an orthocenter of some non-obtuse triangle.
 \end{claim}
 \begin{proof}
-
-\begin{figure}
+\begin{figure}[htbp]
 \centering
-    \includegraphics[width=8cm]{round3/p5construct.jpeg}
+\begin{asy}
+size(10cm);
+import graph;
+import math;
+import olympiad;
+
+pair A,B,C;
+A = 3*dir(90);
+B = 3*dir(180+50);
+C = 3*dir(-50);
+
+label("$A$", A, dir(135));
+label("$B$", B, dir(210));
+label("$C$", C, dir(-30));
+
+draw(A--B--C--cycle);
+pair O = circumcenter(A,B,C);
+label("$O$", O, dir(135));
+dot(O);
+pair H = orthocenter(A,B,C);
+label("$H$", H, dir(135), deepgreen);
+dot(H, deepgreen);
+
+pair D = intersectionpoint(C--A,B--(10H-9B));
+dot(D);
+drawline(B,D,p=gray);
+draw(rightanglemark(H,D,C));
+
+drawline(H,O, p=gray);
+draw(circumcircle(A,B,C),blue);
+
+pair M = (B+C)/2;
+
+label("$M$", M, dir(-45));
+dot(M);
+draw(rightanglemark(B,M,H, s=8));
+
+pair Hp = reflect(B,C)*H;
+dot(Hp);
+label("$H'$", Hp, dir(-45));
+
+add(pathticks(H--M,n=1, s=5));
+add(pathticks(Hp--M,n=1, s=5));
+
+add(pathticks(B--M,n=2, s=5));
+add(pathticks(C--M,n=2, s=5));
+\end{asy}
 \end{figure}
     Let the distance from $O$ to $H$ be denoted $r$. Extend ray $OH$ (if $O=H$, any ray from $O$ will suffice) to meet the unit circle again at $H'$. Let $M$ be the midpoint of $HH'$. Let $A$ be the antipode of $H'$ and $B$ and $C$ the intersections of the perpendicular bisector of $HH'$ with the unit circle. Since $O$ is inside our triangle, it follows that $\triangle ABC$ is acute. By Power of Point, $H'M \cdot AM = HM \cdot AM = MB \cdot MC$. This implies that $\frac{MB}{HM} = \frac{AM}{MC}$, and so $\triangle AMC \sim \triangle BMH$. Since $HM \perp MC$, it follows that $BH \perp AC$. The same reasoning applies on the other side by symmetry, so $H$ is the orthocenter of $\triangle ABC$.
 \end{proof}
