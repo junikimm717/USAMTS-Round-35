@@ -17,7 +17,7 @@
 
 \begin{center}
 \begin{asy}
-size(10cm);
+size(8cm);
 bool DRAW_SOLUTION = true;
 
 int n = 6;
@@ -131,6 +131,8 @@ Now, we are left with a finite case check:
 
 Upon inspection, it is clear that the only possible solutions are the integer triples $(3,6,20)$, $(3,8,10)$, $(4,4,10)$, $(4,5,6)$ and their permutations, which all work.
 
+To answer the question, the number of possible cubes in the bag must be one of $\fbox{120,160,240,360}$.
+
 \end{solution}
 
 
@@ -148,9 +150,7 @@ Call a game state \textit{maintainable} if either:
     \item $a = 1$ and $b \equiv 1 \pmod 3$
     \item $a = 0$ and $b \equiv 0 \pmod 3$
 \end{enumerate}
-Note that the losing state of $(0,0)$ is \textit{maintainable}.
-
-The pith of our solution is the following lemma:
+Note that the losing state of $(0,0)$ is \textit{maintainable}. Now, the pith of our solution is the following lemma:
 \begin{claim}
     Without loss of generality, let it be Lizzy's turn. If the game state is \textit{maintainable}, Alex, no matter what legal move Lizzy plays, can always make the game state \textit{maintainable} after his turn. Furthermore, Lizzy cannot keep the game state \textit{maintainable} on her turn.
 \end{claim}
@@ -181,10 +181,10 @@ The pith of our solution is the following lemma:
         \item She decrements $3n+2$ twos; the game state is then $(3n+2, 3(m-n)-2)$. Alex can decrement all but a single one, turning the game state into $(1, 3(m-n)-2)$.
     \end{itemize}
 
-    So, Alex always has a move to ensure the game state is \textit{maintainable}. The case bash also shows that any legal move that Lizzy can make will never result in a \textit{maintainable state}
+    So, Alex always has a move to ensure the game state is \textit{maintainable}. The case bash also shows that no matter what legal move Lizzy plays, Alex will never have to play on a \textit{maintainable state}.
 \end{proof}
 
-Note that both the number of twos and the sum of all the numbers in the game are strictly decreasing monovariants. Therefore, the sum of all numbers in the game will eventually go to zero, and when it does, it  will be the turn of the player on the \textit{maintainable} state. Therefore, if the state is \textit{maintainable} on a player's turn, their opponent has a rock-solid strategy to keep the player's game state \textit{maintainable}, and so they will lose.
+Note that the sum of all numbers written on the board is a strictly decreasing monovariant; therefore, all numbers on the board eventually go to zero after a finite number of turns. When this happens, it  will be the turn of the player on the \textit{maintainable} state because it can't be otherwise, and so they will lose. If the state is \textit{maintainable} on a player's turn, their opponent has a guaranteed strategy to make sure the player's game state is always \textit{maintainable}.
 
 Now, if $n$ is a multiple of 3, Lizzy starts the game on a \textit{maintainable} game state, so Alex has a winning strategy. If $n$ is not, Lizzy can make one of the following two moves to force Alex to play on a \textit{maintainable} state:
 
@@ -204,88 +204,76 @@ Now, if $n$ is a multiple of 3, Lizzy starts the game on a \textit{maintainable}
 
 We first solve \textbf{Part a}, for which the statement is \fbox{true}. It is well-known that the cardinality of $\RR^n$ is the same as the cardinality of any open interval $(a,b)$ on the real line. Therefore, there exists some bijection which maps $\RR^2$ to $(0,2\pi)$. We can then map elements on $(0,2\pi)$ to a unique point on the unit circle of the complex plane: $x \hookrightarrow e^{xi}$. Any polygon with vertices on this unit circle, if it is not self-intersecting, is immediately convex. Therefore, any polygon on our original plane will get mapped to a convex polygon which is not degenerate (guaranteed because of the injectivity of our map). 
 
-We now solve \textbf{Part b}, for which the statement is \fbox{false}. We will consider a regular 1001-gon with all points on the unit circle. Any polygon that is generated with a subset of the vertices of this 1001-gon, assuming no self-intersections, is also convex.
+We now solve \textbf{Part b}, for which the statement is \fbox{false}.
 \begin{claim}
     Let $G^*$ be the image of a convex polygon $G$ under the map $f$ whose points are all on the unit circle. Then, $G^*$ cannot have any convex sub-polygon with more than 3 points. In particular, its convex hull, if it has more than three points, must be a triangle.
 \end{claim}
 \begin{proof}
-    If there exists a convex sub-polygon on $G^*$ which contains more than 3 points, let it be temporarily denoted $S^*$, we can just take the intersection of $G$ and the pre-image of $S^*$ to get a set of points that denote a convex polygon but whose image is also a convex polygon. The convex hull must be a triangle because otherwise we get a degenerate quadrilateral on a line, which is not allowed
+    If there exists a convex sub-polygon on $G^*$ with at least 4 points, let it be temporarily denoted $S^*$, we can take the set $C = G \cap (S^*)^{-1}$. clearly, $\abs{C} \geq 4$, but $C$ and $S^*$ are both convex polygons. So, a convex polygon maps to a convex polygon, contradiction.
 \end{proof}
 
 \begin{claim}
-    The image of the vertices of a regular 1001-gon under the map $f$ must contain at least 250 distinct points.
+    The image of the vertices of a regular 19-gon under the map $f$ must contain at least 6 distinct points.
 \end{claim}
 \begin{proof}
-    Assume for the sake of contradiction that this was not true. Then, there exists a point $x$ such that at least 5 vertices of our 1001-gon map to it. Now, consider the set of all vertices $v$ such that $f(v) = x$, which we denote as $V$. The points in $V$ form a convex polygon with at least 5 sides, but the image of $V$ is a single point, which is a degenerate polygon.
+    Assume for the sake of contradiction that this was not true. Then, there exists a point $x$ such that at least 4 vertices of our 19-gon map to it. Now, consider the set of all vertices $v$ such that $f(v) = x$, which we denote as $V$. The points in $V$ form a convex polygon with at least 4 sides, but the image of $V$ is a single point, which is a degenerate polygon.
 \end{proof}
 
-Therefore, we can find points $A$, $B$, $C$, $D$, $E$, and $F$ such that they all map to different points under $f$. Without loss of generality, let $A^*$, $B^*$, and $C^*$ be the points on the convex hull of the image of $ABCDEF$ (By our previous claim, these are the only points on the convex hull). Then, $D^*$, $E^*$, and $F^*$ must be points inside this convex hull. 
+Therefore, we can find points $A$, $B$, $C$, $D$, $E$, and $F$ on the unit circle such that they all map to different points under $f$; let the points they map to be denoted $A^*$, $B^*$, $C^*$, $D^*$, $E^*$, and $F^*$ respectively. Now, the problem is solved with the following lemma:
 
-If $D^*$, $E^*$, and $F^*$ are collinear, then $A^*D^*E^*F^*$ will either be a triangle with all points on the convex hull (so it is not concave) or all four points will be collinear, in which case they will form a degenerate quadrilateral.
-
-So, we can assume that $D^*E^*F^*$ is a non-degenerate triangle. Consider the following diagram:
-
-\begin{center}
-    \begin{asy}
-size(8cm,0);
-import graph;
-defaultpen(fontsize(6pt));
-
-pair D = (2,4),E = (0,0),F = (5,0);
-
+\begin{claim}
+    Six distinct points on the plane, which we will denote $A^*$, $B^*$, $C^*$, $D^*$, $E^*$, and $F^*$, will always form at least one non-concave or degenerate quadrilateral.
+\end{claim}
+\begin{proof}
+\begin{asydef}
 void drawDiag(pair D, pair E, pair F) {
     label("$D^*$", D, dir(20), p=blue);
-    label("$E^*$", E, 2*dir(210), p=blue);
-    label("$F^*$", F, 2.5*dir(-25), p=blue);
+    label("$E^*$", E, dir(-50), p=blue);
+    label("$F^*$", F, dir(-130), p=blue);
     draw(D--E--F--cycle);
     draw((2E-D)--(2D-E));
     draw((2F-E)--(2E-F));
     draw((2D-F)--(2F-D));
     
-    label("$1$", (5D-E-F)/3, p=fontsize(10pt)+deepblue);
-    label("$3$", (5E-F-D)/3, p=fontsize(10pt)+deepblue);
-    label("$5$", (5F-D-E)/3, p=fontsize(10pt)+deepblue);
-    label("$2$", (3D+3E-2F)/4, p=fontsize(10pt)+deepblue);
-    label("$4$", (3E+3F-2D)/4, p=fontsize(10pt)+deepblue);
-    label("$6$", (3D+3F-2E)/4, p=fontsize(10pt)+deepblue);
-    label("$7$", (D+E+F)/3, p=fontsize(10pt)+deepblue);
+    label("$1$", (5D-E-F)/3, p=fontsize(10pt));
+    label("$3$", (5E-F-D)/3, p=fontsize(10pt));
+    label("$5$", (5F-D-E)/3, p=fontsize(10pt));
+    label("$2$", (3D+3E-2F)/4, p=fontsize(10pt));
+    label("$4$", (3E+3F-2D)/4, p=fontsize(10pt));
+    label("$6$", (3D+3F-2E)/4, p=fontsize(10pt));
+    label("$7$", (D+E+F)/3, p=fontsize(10pt));
 }
+\end{asydef}
+If any three points are collinear, we are guaranteed to create a degenerate quadrilateral by simply considering a fourth point. Assuming this is not the case, the six points form a convex hull $\mathcal{H}$ with nonzero area. This convex hull must contain exactly three points; otherwise, the points on the convex hull will determine a convex or degenerate polygon with at least four sides. Without loss of generality, let $A^*$, $B^*$, and $C^*$ be the points on the convex hull. Points $D^*$, $E^*$, and $F^*$, which are all inside $\triangle A^*B^*C^*$, form a triangle, and the extensions of their sides partition the plane into seven convex regions as follows:
+\begin{center}
+\begin{asy}
+size(6cm,0);
+import graph;
+defaultpen(fontsize(8pt));
+
+pair D = (2,4),E = (0,0),F = (5,0);
 drawDiag(D,E,F);
-    \end{asy}
+\end{asy}
 \end{center}
 
 Because $A^*$ is part of the convex hull, it cannot be inside region 7, in which case it would fail to be part of the convex hull. The same reasoning applies for $B^*$ and $C^*$.
 
-If $A^*$ (and likewise for $B^*$ and $C^*$) is on regions 2, 4, or 6, we claim that $D^*E^*F^*A^*$ will be a convex quadrilateral under some permutation. Without loss of generality, let $A^*$ lie on region 2, as shown in the diagram below. Then, points $D^*$ and $E^*$ lie on opposite sides of the line $A^*F^*$ or on it. $A^*$ also lies either on the line $D^*E^*$ or on the opposite side from $F^*$. Therefore, the quadrilateral $E^*A^*D^*F^*$ is not concave.
+If $A^*$ (and likewise for $B^*$ and $C^*$) is on regions 2, 4, or 6, we claim that $D^*E^*F^*A^*$ will be a convex quadrilateral under some permutation. Without loss of generality, let $A^*$ lie on region 2, as shown in the diagram below. Then, points $D^*$ and $E^*$ lie on opposite sides of the line $A^*F^*$. $A^*$ and $F^*$ also lie on opposite sides of the line $E^*D^*$. Therefore, the quadrilateral $E^*A^*D^*F^*$ is convex.
 
 
 \begin{center}
 \begin{asy}
-size(8cm,0);
+size(6cm,0);
 import graph;
-defaultpen(fontsize(6pt));
+defaultpen(fontsize(8pt));
 
 pair D = (2,4),E = (0,0),F = (5,0);
-label("$D^*$", D, dir(20), p=blue);
-label("$E^*$", E, 2*dir(210), p=blue);
-label("$F^*$", F, 2.5*dir(-25), p=blue);
 
 pair A = (-4,1);
 dot(A, red);
 fill(F--D--A--E--cycle, palecyan);
 label("$A^*$", A, 2*dir(120), p=red);
-
-draw((2E-D)--(2D-E));
-draw((2F-E)--(2E-F));
-draw((2D-F)--(2F-D));
-
-label("$1$", (5D-E-F)/3, p=fontsize(10pt));
-label("$3$", (5E-F-D)/3, p=fontsize(10pt));
-label("$5$", (5F-D-E)/3, p=fontsize(10pt));
-label("$2$", (3D+3E-2F)/4, p=fontsize(10pt));
-label("$4$", (3E+3F-2D)/4, p=fontsize(10pt));
-label("$6$", (3D+3F-2E)/4, p=fontsize(10pt));
-label("$7$", (D+E+F)/3, p=fontsize(10pt));
+drawDiag(D,E,F);
 
 draw(D--E,red);
 draw(A--F,red);
@@ -295,21 +283,41 @@ draw(F--D--A--E--cycle, deepgreen);
 
 We can now assume that points $A^*$, $B^*$, and $C^*$ will only occupy regions 1,3, or 5.
 
-If $A^*$, $B^*$, and $C^*$ all reside on one of these regions, say region 1, then the set of points that can be in the interior of $\triangle A^*B^*C^*$ is a subset of region 1 (because region 1 is convex). But $E^*$ is not in region 1 (when it must be an interior point of $\triangle A^*B^*C^*$), which is a contradiction.
+Consider the case where $A^*$, $B^*$, and $C^*$ all reside on one of these regions. Without loss of generality, let all three of them be on region $1$. Then, the line $D^*E^*$ separates $\triangle A^*B^*C^*$ from $F^*$, so $\triangle A^*B^*C^*$ is not a convex hull.
 
-This means that at least two of the regions need to be occupied. Without loss of generality, assume that $A^*$ is in region 1 and $B^*$ is in region 3. Then, $A^*D^*E^*B^*$ is a convex quadrilateral. In particular, points $D^*$ and $B^*$ must be on opposite sides of the line $A^*E^*$ or on the line, and points $A^*$ and $E^*$ need to be on opposite sides of the line $B^*D^*$ or on the line. Therefore, this quadrilateral cannot be concave.
+This means that at least two of the regions need to be occupied. Without loss of generality, assume that $A^*$ is in region 1 and $B^*$ is in region 3. Since $D^*$ and $B^*$ must be on opposite sides of the line $A^*E^*$, and points $A^*$ and $E^*$ are on opposite sides of the line $B^*D^*$, it follows that $A^*D^*E^*B^*$ is a convex quadrilateral.
 
 \begin{center}
 \begin{asy}
-size(8cm,0);
+size(6cm,0);
 import graph;
 import math;
-defaultpen(fontsize(6pt));
+defaultpen(fontsize(8pt));
 
 pair D = (2,4),E = (0,0),F = (5,0);
-label("$D^*$", D, dir(20), p=blue);
-label("$E^*$", E, 2*dir(210), p=blue);
-label("$F^*$", F, 2.5*dir(-25), p=blue);
+
+pair A = (1,9);
+pair B = (1.5,5);
+pair C = (3,8.5);
+dot(A, red);
+dot(B, red);
+dot(C, red);
+fill(A--B--C--cycle, palecyan);
+label("$A^*$", A, dir(120), p=red);
+label("$B^*$", B, dir(180), p=red);
+label("$C^*$", C, dir(0), p=red);
+drawDiag(D,E,F);
+
+drawline(D,E,red+linewidth(2));
+draw(A--B--C--cycle, deepgreen);
+\end{asy}
+\begin{asy}
+size(6cm,0);
+import graph;
+import math;
+defaultpen(fontsize(8pt));
+
+pair D = (2,4),E = (0,0),F = (5,0);
 
 pair A = (1,6);
 pair B = (-2,-2);
@@ -318,18 +326,7 @@ dot(B, red);
 fill(A--D--E--B--cycle, palecyan);
 label("$A^*$", A, 2*dir(120), p=red);
 label("$B^*$", B, 2*dir(180), p=red);
-
-draw((2E-D)--(2D-E));
-draw((2F-E)--(2E-F));
-draw((2D-F)--(2F-D));
-
-label("$1$", (5D-E-F)/3, p=fontsize(10pt));
-label("$3$", (5E-F-D)/3, p=fontsize(10pt));
-label("$5$", (5F-D-E)/3, p=fontsize(10pt));
-label("$2$", (3D+3E-2F)/4, p=fontsize(10pt));
-label("$4$", (3E+3F-2D)/4, p=fontsize(10pt));
-label("$6$", (3D+3F-2E)/4, p=fontsize(10pt));
-label("$7$", (D+E+F)/3, p=fontsize(10pt));
+drawDiag(D,E,F);
 
 drawline(A, E, red);
 drawline(B, D, red);
@@ -337,9 +334,7 @@ draw(A--D--E--B--cycle, deepgreen);
 
 \end{asy}
 \end{center}
-
-Therefore, there will always exist a convex quadrilateral whose image under $f$ is a non-concave quadrilateral.
-\hfill\qed
+\end{proof}
 \end{solution}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -348,49 +343,218 @@ Therefore, there will always exist a convex quadrilateral whose image under $f$ 
 %%%%%%%%%%                 %%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
-The answer is the set of points that are on the ellipsoid with equation $x^2 + y^2 + 2z^2 = 1$ such that $z \neq 0$.
+The answer is the set of all points that are on the ellipsoid with equation $x^2 + y^2 + 2z^2 = 1$ such that $z \neq 0$.
 
-Let us consider a triangle $\triangle ABC$. For the perpendicularity conditions to hold, $P$ needs to lie on a sphere with radius $\frac{BC}{2}$ and centered at the midpoint of $\overline{BC}$. Let this sphere be denoted $\Gamma_A$, and define $\Gamma_B$ and $\Gamma_C$ likewise. Note that $\Gamma_A$ is the locus of all points $X$ such that $BX \perp CX$, and likewise for $\Gamma_B$ and $\Gamma_C$. We would like to find points where all three circles concur.
+\begin{center}
+\begin{asy}
+import three;
+unitsize(1cm);
+size(200);
+//size(6cm,0);
+defaultpen(fontsize(6pt));
+currentprojection=orthographic(0.75, -3, 1);
 
-Because of this definition, $\Gamma_B$ and $\Gamma_C$ will pass through $A$ and the foot of the perpendicular line from $A$ to $BC$ (which we will temporarily denote $D$). Therefore, the locus of all points that are on both $\Gamma_B$ and $\Gamma_C$ will be a circle with diameter $AD$ and which is perpendicular to the xy plane. So, the projection of $P$ onto the xy plane, mapping from $(x,y,z) \rightarrow (x,y,0)$, must be on segment $AD$. We repeat the same reasoning for the other two cases. Therefore, the projection of $P$ is on the orthocenter of $\triangle ABC$ (denoted $H$), and it can only exist if $\triangle ABC$ is acute.
+triple O = (0,0,0);
 
-Now, we would like to calculate the length of $HP$. Let $M$ be the midpoint of $BC$. Since $M$ is the center of $\Gamma_A$ and $P$ is the concurrency point of all three circles, $MP = MB = MC$. Therefore, $HP^2 = MB^2 - MH^2$. To calculate this, we will use complex numbers. Let our unit circle be the complex unit circle and let $a,b,c$ denote the three points of $\triangle ABC$. Now, $M$ is defined as $\frac{b+c}{2}$ and $H$ is defined as $a+b+c$.
+triple A = (cos(radians(120)), sin(radians(120)), 0);
+triple B = (cos(radians(210)), sin(radians(210)), 0);
+triple C = (cos(radians(330)), sin(radians(330)), 0);
+triple H = (A + B + C);
 
-\newcommand{\ol}{\overline}
+triple P = (H.x, H.y, sqrt((1 - abs(H)^2)/2));
+triple Pp = (H.x, H.y, -sqrt((1 - abs(H)^2)/2));
+label("$H$", align=2N, H);
+label("$P$", align=2N, P);
+label("$P'$", align=-2N, Pp);
+dot(P); dot(Pp); dot(H);
+draw(P--Pp, gray(0.2)+dashed);
 
-\begin{align*}
-    MB^2 &= \paren{b - \frac{b+c}{2}}\paren{\ol{b} - \ol{\frac{b+c}{2}}}\\
-         &= \paren{\frac{b-c}{2}}\paren{\frac{\ol{b}-\ol{c}}{2}}\\
-         &=\frac{2-\ol{b}c-b\ol{c}}{4}\\
-\end{align*}
+draw(A--P, gray(0.2)); draw(B--P, gray(0.2)); draw(C--P, gray(0.2));
+draw(A--Pp, gray(0.2)); draw(B--Pp, gray(0.2)); draw(C--Pp, gray(0.2));
 
-\begin{align*}
-    -MH^2 &= -\paren{a+b+c - \frac{b+c}{2}}\ol{\paren{a+b+c - \frac{b+c}{2}}}\\
-          &= -\paren{a + \frac{b+c}{2}}\paren{\ol{a}+\frac{\ol{b}+\ol{c}}{2}}\\
-          &= -1 + \frac{-a\ol{b}-a\ol{c}}{2} + \frac{-\ol{a}b-\ol{a}c}{2} + \frac{-2-b\ol{c}-\ol{b}c}{4}\\
-\end{align*}
+surface midpoint_sphere(triple x, triple y) {
+  return shift((x+y)/2) * scale3(abs((x-y)/2)) * unitsphere;
+}
 
-Summing these two expressions together, we get that
-\begin{align*}
-    HP^2 &= \frac{-2 - a\ol{b}-\ol{a}b -a\ol{c}-\ol{a}{c} - b\ol{c}-\ol{b}{c}}{2}\\
-         &= \frac{1 - \paren{a+b+c}\paren{\ol{a}+\ol{b}+\ol{c}}}{2}\\
-         &= \frac{1 - OH^2}{2}\\
-\end{align*}
+draw(A--B--C--cycle);
 
-Which shows all possible values of the $z$-coordinate of $P$ (given a fixed $\triangle ABC$), as desired. Since our expression for $P$ is symmetric to $a$, $b$, and $c$, it follows that we can apply the same computations for $\Gamma_B$ and $\Gamma_C$ and get the same result for $HP^2$. Therefore, $P$ is the concurrency point of all three circles.
+real BOUNDARY = 1.8;
+draw(O--(BOUNDARY,0,0), gray,Arrow3);
+draw(O--(-BOUNDARY,0,0), gray,Arrow3);
 
-We have one edge case, where $\triangle ABC$ is a right triangle. Without loss of generality, let $\angle ABC = 90^\circ$. Then, the orthocenter coincides with $B$, and because of our computations before, $P$ should also coincide with $B$ as well (since it is on the z-axis). However, the angle $\angle BPC = \angle BBC$ is not well-defined in and of itself.
+draw(O--(0,-BOUNDARY,0), gray,Arrow3);
+draw(O--(0,BOUNDARY,0), gray,Arrow3);
 
-The problem now finishes with the following claim:
+draw(O--(0,0,BOUNDARY), gray,Arrow3);
+draw(O--(0,0,-BOUNDARY), gray,Arrow3);
+
+surface solution = zscale3(1/sqrt(2)) * unitsphere;
+draw(solution, opacity(0.4)+gray,currentlight);
+path3 g=(1,0,0)..(0,1,0)..(-1,0,0)..(0,-1,0)..cycle;
+draw(g, white);
+
+
+label("$(0,0,\frac{1}{\sqrt{2}})$", align=2N, (0,0,1/sqrt(2)));
+label("$(0,0,-\frac{1}{\sqrt{2}})$", align=-2N, (0,0,-1/sqrt(2)));
+dot((0,0,1/sqrt(2)), gray(0.2));
+dot((0,0,-1/sqrt(2)), gray(0.2));
+label("$A$", align=N, A);
+label("$B$", align=N, B);
+label("$C$", align=N, C);
+\end{asy}
+\begin{asy}
+import three;
+unitsize(1cm);
+size(200);
+//size(6cm,0);
+defaultpen(fontsize(6pt));
+currentprojection=orthographic(-0.7, -3, 1);
+
+triple O = (0,0,0);
+
+triple A = (cos(radians(120)), sin(radians(120)), 0);
+triple B = (cos(radians(210)), sin(radians(210)), 0);
+triple C = (cos(radians(330)), sin(radians(330)), 0);
+triple H = (A + B + C);
+
+triple P = (H.x, H.y, sqrt((1 - abs(H)^2)/2));
+triple Pp = (H.x, H.y, -sqrt((1 - abs(H)^2)/2));
+draw(P--Pp, gray(0.2)+dashed);
+label("$H$", align=2N, H);
+label("$P$", align=2N, P);
+label("$P'$", align=-2N, Pp);
+dot(P); dot(Pp); dot(H);
+
+draw(A--P, gray(0.2)); draw(B--P, gray(0.2)); draw(C--P, gray(0.2));
+draw(A--Pp, gray(0.2)); draw(B--Pp, gray(0.2)); draw(C--Pp, gray(0.2));
+
+surface midpoint_sphere(triple x, triple y) {
+  return shift((x+y)/2) * scale3(abs((x-y)/2)) * unitsphere;
+}
+
+draw(A--B--C--cycle);
+
+draw(midpoint_sphere(A,B), opacity(0.25)+red,currentlight);
+draw(midpoint_sphere(B,C), opacity(0.25)+green,currentlight);
+draw(midpoint_sphere(A,C), opacity(0.25)+blue,currentlight);
+
+real BOUNDARY = 1.8;
+draw(O--(BOUNDARY,0,0), gray,Arrow3);
+draw(O--(-BOUNDARY,0,0), gray,Arrow3);
+
+draw(O--(0,-BOUNDARY,0), gray,Arrow3);
+draw(O--(0,BOUNDARY,0), gray,Arrow3);
+
+draw(O--(0,0,BOUNDARY), gray,Arrow3);
+draw(O--(0,0,-BOUNDARY), gray,Arrow3);
+path3 g=(1,0,0)..(0,1,0)..(-1,0,0)..(0,-1,0)..cycle;
+draw(g, white);
+
+label("$A$", align=N, A);
+label("$B$", align=N, B);
+label("$C$", align=N, C);
+\end{asy}
+\end{center}
+
+Let us consider a triangle $\triangle ABC$. For the perpendicularity conditions to hold, $P$ needs to lie on a sphere with radius $\frac{BC}{2}$ and centered at the midpoint of $\overline{BC}$. Let this sphere, excluding the points $B$ and $C$ (since the right angle condition is not well-defined there), be denoted $\Gamma_A$, and define $\Gamma_B$ and $\Gamma_C$ likewise. Note that $\Gamma_A$ is the locus of all points $X$ such that $BX \perp CX$, and likewise for $\Gamma_B$ and $\Gamma_C$. We would like to find the points where all three circles concur.
+
+\begin{center}
+\begin{asy}
+size(8cm);
+import olympiad;
+pair A = (3,12), B = (0,0), C = (14,0);
+label("$A$", A, dir(80));
+label("$B$", B, dir(-90));
+label("$C$", C, dir(-70));
+draw(A--B--C--cycle);
+draw(circle((A+B)/2, abs((A-B)/2)), red);
+draw(circle((B+C)/2, abs((B-C)/2)), blue+dashed);
+draw(circle((C+A)/2, abs((A-C)/2)), red);
+
+pair D = foot(A,B,C);
+pair E = foot(B,A,C);
+pair F = foot(C,A,B);
+label("$D$", D, dir(-90));
+label("$E$", E, dir(20));
+label("$F$", F, dir(135));
+draw(A--D, red+dashed);
+draw(B--E, blue+dashed);
+draw(C--F, blue+dashed);
+draw(rightanglemark(A,D,B, s=8));
+pair H = orthocenter(A,B,C);
+label("$H$", H, dir(20));
+
+pair M = (B+C)/2;
+label("$M$", M, dir(-90));
+dot(M);
+\end{asy}
+\begin{asy}
+import three;
+unitsize(1cm);
+size(250);
+//size(6cm,0);
+defaultpen(fontsize(8pt));
+currentprojection=TopView;
+
+triple O = (0,0,0);
+
+triple A = (cos(radians(120)), sin(radians(120)), 0);
+triple B = (cos(radians(210)), sin(radians(210)), 0);
+triple C = (cos(radians(330)), sin(radians(330)), 0);
+triple H = (A + B + C);
+
+triple P = (H.x, H.y, sqrt((1 - abs(H)^2)/2));
+triple Pp = (H.x, H.y, -sqrt((1 - abs(H)^2)/2));
+/*
+label("$H$", align=2N, H);
+label("$P'$", align=-2N, Pp);
+dot(Pp); dot(H);
+*/
+label("$P$", align=2N, P);
+dot(P);
+
+draw(A--P, gray(0.2)); draw(B--P, gray(0.2)); draw(C--P, gray(0.2));
+///draw(A--Pp, gray(0.2)); draw(B--Pp, gray(0.2)); draw(C--Pp, gray(0.2));
+
+surface midpoint_sphere(triple x, triple y) {
+  return shift((x+y)/2) * scale3(abs((x-y)/2)) * unitsphere;
+}
+
+draw(A--B--C--cycle);
+
+draw(midpoint_sphere(A,B), opacity(0.3)+red,currentlight);
+draw(midpoint_sphere(B,C), opacity(0.3)+green,currentlight);
+draw(midpoint_sphere(A,C), opacity(0.3)+blue,currentlight);
+
+real BOUNDARY = 1.8;
+draw(O--(BOUNDARY,0,0), gray,Arrow3);
+draw(O--(-BOUNDARY,0,0), gray,Arrow3);
+
+draw(O--(0,-BOUNDARY,0), gray,Arrow3);
+draw(O--(0,BOUNDARY,0), gray,Arrow3);
+
+draw(O--(0,0,BOUNDARY), gray,Arrow3);
+draw(O--(0,0,-BOUNDARY), gray,Arrow3);
+
+path3 g=(1,0,0)..(0,1,0)..(-1,0,0)..(0,-1,0)..cycle;
+draw(g, white);
+
+label("$A$", align=N, A);
+label("$B$", align=N, B);
+label("$C$", align=N, C);
+\end{asy}
+\end{center}
+
+Because of this definition, $\Gamma_B$ and $\Gamma_C$ will pass through $A$ and the foot of the perpendicular line from $A$ to $BC$ (which we will temporarily denote $D$). Therefore, the locus of all points that are on both $\Gamma_B$ and $\Gamma_C$ will be a circle with diameter $AD$ and which is perpendicular to the xy plane. So, the projection of $P$ onto the xy plane, mapping from $(x,y,z) \rightarrow (x,y,0)$, must be on the set of all points on segment $AD$ excluding $A$. We repeat the same reasoning for the other two cases. Therefore, the projection of $P$ is on the orthocenter of $\triangle ABC$ (denoted $H$), and it can only exist if $\triangle ABC$ is acute.
 
 \begin{claim}
-    All points on the open unit disk are an orthocenter of some non-obtuse triangle.
+All points on the open unit disk are an orthocenter of some acute triangle with vertices on the unit circle.
 \end{claim}
 \begin{proof}
 \begin{figure}[htbp]
 \centering
 \begin{asy}
-size(10cm);
+size(5cm);
 import graph;
 import math;
 import olympiad;
@@ -438,6 +602,59 @@ add(pathticks(C--M,n=2, s=5));
 \end{asy}
 \end{figure}
     Let the distance from $O$ to $H$ be denoted $r$. Extend ray $OH$ (if $O=H$, any ray from $O$ will suffice) to meet the unit circle again at $H'$. Let $M$ be the midpoint of $HH'$. Let $A$ be the antipode of $H'$ and $B$ and $C$ the intersections of the perpendicular bisector of $HH'$ with the unit circle. Since $O$ is inside our triangle, it follows that $\triangle ABC$ is acute. By Power of Point, $H'M \cdot AM = HM \cdot AM = MB \cdot MC$. This implies that $\frac{MB}{HM} = \frac{AM}{MC}$, and so $\triangle AMC \sim \triangle BMH$. Since $HM \perp MC$, it follows that $BH \perp AC$. The same reasoning applies on the other side by symmetry, so $H$ is the orthocenter of $\triangle ABC$.
+\end{proof}
+
+\begin{claim}
+    In directed lengths (positive z-direction), $HP = \pm \sqrt{\frac{1 - OH^2}{2}}$. So, the $z$-coordinate of $P$ is only dependent on $H$ and not on $\triangle ABC$.
+\end{claim}
+
+\begin{proof}
+\begin{figure}[htbp]
+\centering
+\begin{asy}
+import olympiad;
+size(6cm);
+defaultpen(fontsize(8pt));
+
+pair A,B,C,D,E,F,H,O,M,Mp,Hp;
+A = (3,12); B = (0,0); C = (14,0);
+D = foot(A,B,C); E = foot(B,A,C); F = foot(C,A,B); H = orthocenter(A,B,C);
+O = circumcenter(A,B,C);
+Mp=(C+F)/2;
+M=(B+C)/2;
+Hp = 2*F-H;
+
+dot(O); dot(Mp, blue); dot(M);
+draw(A--B--C--cycle);
+draw(A--D, dashed); draw(B--E, dashed); draw(C--Hp,blue);
+draw(circumcircle(A,B,C));
+
+draw(M--H,red);
+draw(M--C,red);
+draw(M--Mp,red+dashed);
+draw(rightanglemark(M,Mp,C));
+draw(circumcircle(B,C,F), blue+dotted);
+
+add(pathticks(H--F, n=1));
+add(pathticks(Hp--F, n=1));
+
+real[] angles = {80, -90, -70, -70, 90, 120,45,130,-70,80,135};
+pair[] points = {A,B,C,D,E,F,O,H,M,Mp, Hp};
+string[] labels = {"A", "B", "C", "D", "E", "F", "O", "H", "M", "M'", "H'"};
+
+for (int i = 0; i < angles.length; ++i) {
+  label("$" + labels[i] + "$", points[i], dir(angles[i]));
+}
+\end{asy}
+\end{figure}
+
+Let $M$ be the midpoint of $BC$. Since $M$ is the center of $\Gamma_A$ and $P$ is the concurrency point of all three circles, $MP = MB = MC$. Therefore, $HP^2 = MC^2 - MH^2$. By Power of Point,
+$$\frac{1 - OH^2}{2} = \frac{OA^2 - OH^2}{2} = \frac{CH \cdot HH'}{2} = CH \cdot HF$$ Now, Let $M'$ be the midpoint of $CF$. Since $CF$ is a chord of the circumcircle of $BFEC$ with center $M$, $MM' \perp CF$. By the Pythagorean theorem and a little bit of algebra,
+\[
+MC^2 - MH^2 = \paren{MM'^2 + M'C^2} - \paren{MM'^2 + M'H^2} = M'C^2 - MH^2 = (M'C+M'H)(M'C-M'H) = CH \cdot CF
+\]
+So, we have proven that these two expressions are equal. This logic is equally applicable to the other spheres $\Gamma_B$ and $\Gamma_C$, so the $P$ we have derived is the concurrency point of all three spheres.
+
 \end{proof}
 
 \end{solution}
