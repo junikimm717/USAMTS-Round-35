@@ -131,7 +131,7 @@ Now, we are left with a finite case check:
 
 Upon inspection, it is clear that the only possible solutions are the integer triples $(3,6,20)$, $(3,8,10)$, $(4,4,10)$, $(4,5,6)$ and their permutations, which all work.
 
-To answer the question, the number of possible cubes in the bag must be one of $\fbox{120,160,240,360}$.
+To answer the question, the number of cubes in the bag must be one of $\fbox{120,160,240,360}$.
 
 \end{solution}
 
@@ -160,11 +160,11 @@ Note that the losing state of $(0,0)$ is \textit{maintainable}. Now, the pith of
 
     Now, there are three different cases where Lizzy chooses to decrement some number of twos, but decides to keep the one that was already there.
     \begin{itemize}
-        \item She decrements $3n$ twos; the game state is then $(3n+1, 3(m-n)+1)$. Alex can then delete $3n$ of the ones (this is possible since $n$ in this particular case is forced to be nonzero) and turn the game state into $(1, 3(m-n)+1)$.
+        \item She decrements $3n$ twos; the game state is then $(3n+1, 3(m-n)+1)$. Alex can then decrement $3n$ of the ones (this is possible since $n$ in this particular case is forced to be nonzero) and turn the game state into $(1, 3(m-n)+1)$.
         \item She decrements $3n+1$ twos; the game state is then $\paren{3n+2, 3(m-n)}$. Alex can then decrement all the ones on the board to make the game state $(0,3(m-n))$.
         \item She decrements $3n+2$ twos; the game state is then $\paren{3n+3, 3(m-n)-1}$. Alex can then decrement all of the ones on the board and decrement a two, altering the game step as follows: $(3n+3, 3(m-n)-1) \Rightarrow (0,3(m-n)-1) \Rightarrow (1, 3(m-n)-2)$.
     \end{itemize}
-    There are also three different cases (basically the same logic) where she deletes the one that was already on the board and decrements some number of twos.
+    There are also three different cases (basically the same reasoning) where she deletes the one that was already on the board and decrements some number of twos.
     \begin{itemize}
         \item She decrements $3n$ twos; the game state is then $(3n, 3(m-n)+1)$. Alex can then delete $3n-1$ of the ones and turn the game state into $(1, 3(m-n)+1)$. In the case that $n=0$, Alex can delete a two to turn the game state into $(0, 3(m-n))$.
         \item She decrements $3n+1$ twos; the game state is then $\paren{3n+1, 3(m-n)}$. Alex can then decrement all the ones on the board to make the game state $(0,3(m-n))$.
@@ -184,9 +184,9 @@ Note that the losing state of $(0,0)$ is \textit{maintainable}. Now, the pith of
     So, Alex always has a move to ensure the game state is \textit{maintainable}. The case bash also shows that no matter what legal move Lizzy plays, Alex will never have to play on a \textit{maintainable state}.
 \end{proof}
 
-Note that the sum of all numbers written on the board is a strictly decreasing monovariant; therefore, all numbers on the board eventually go to zero after a finite number of turns. When this happens, it  will be the turn of the player on the \textit{maintainable} state because it can't be otherwise, and so they will lose. If the state is \textit{maintainable} on a player's turn, their opponent has a guaranteed strategy to make sure the player's game state is always \textit{maintainable}.
+Note that the sum of all numbers written on the board is a strictly decreasing monovariant; therefore, all numbers on the board eventually go to zero after a finite number of turns. When this happens, it will be the turn of the player on the \textit{maintainable} state because it can't be otherwise, and so they will lose. As shown before, if the state is \textit{maintainable} on a player's turn, their opponent has a guaranteed strategy to make sure the player's game state is always \textit{maintainable} on their turn.
 
-Now, if $n$ is a multiple of 3, Lizzy starts the game on a \textit{maintainable} game state, so Alex has a winning strategy. If $n$ is not, Lizzy can make one of the following two moves to force Alex to play on a \textit{maintainable} state:
+Now, if $n$ is a multiple of 3, Lizzy starts the game on a \textit{maintainable} game state, so Alex has a winning strategy. Otherwise, Lizzy can make one of the following two moves to force Alex to play on a \textit{maintainable} state:
 
 \begin{itemize}
     \item If $n = 3k+1$; Lizzy can delete a two, turning the game state from $(0, 3k+1)$ to $(0, 3k)$.
@@ -202,14 +202,16 @@ Now, if $n$ is a multiple of 3, Lizzy starts the game on a \textit{maintainable}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{solution}
 
-We first solve \textbf{Part a}, for which the statement is \fbox{true}. It is well-known that the cardinality of $\RR^n$ is the same as the cardinality of any open interval $(a,b)$ on the real line. Therefore, there exists some bijection which maps $\RR^2$ to $(0,2\pi)$. We can then map elements on $(0,2\pi)$ to a unique point on the unit circle of the complex plane: $x \hookrightarrow e^{xi}$. Any polygon with vertices on this unit circle, if it is not self-intersecting, is immediately convex. Therefore, any polygon on our original plane will get mapped to a convex polygon which is not degenerate (guaranteed because of the injectivity of our map). 
+We first solve \textbf{Part a}, for which the statement is \fbox{true}. It is well-known that the cardinality of $\RR^n$ is the same as the cardinality of any open interval $(a,b)$ on the real line. Therefore, there exists some injection which maps $\RR^2$ to $(0,2\pi)$, and then $(0,2\pi)$ to a unique point on the unit circle of the cartesian plane by $x \rightarrow \paren{\sin{x}, \cos{x}}$.
+ Any polygon with vertices on this unit circle, if it is not self-intersecting, is immediately convex. Therefore, any polygon on our original plane will get mapped to a convex polygon which is not degenerate (guaranteed because of the injectivity of our map). 
+ \qed
 
 We now solve \textbf{Part b}, for which the statement is \fbox{false}.
 \begin{claim}
     Let $G^*$ be the image of a convex polygon $G$ under the map $f$ whose points are all on the unit circle. Then, $G^*$ cannot have any convex sub-polygon with more than 3 points. In particular, its convex hull, if it has more than three points, must be a triangle.
 \end{claim}
 \begin{proof}
-    If there exists a convex sub-polygon on $G^*$ with at least 4 points, let it be temporarily denoted $S^*$, we can take the set $C = G \cap (S^*)^{-1}$. clearly, $\abs{C} \geq 4$, but $C$ and $S^*$ are both convex polygons. So, a convex polygon maps to a convex polygon, contradiction.
+    If there exists a convex sub-polygon on $G^*$ with at least 4 points, let it be temporarily denoted $S^*$, we can take the set $C = G \cap (S^*)^{-1}$. Clearly, $\abs{C} \geq 4$, but $C$ and $S^*$ are both convex polygons. So, a convex polygon maps to a convex polygon, contradiction.
 \end{proof}
 
 \begin{claim}
@@ -226,11 +228,11 @@ Therefore, we can find points $A$, $B$, $C$, $D$, $E$, and $F$ on the unit circl
 \end{claim}
 \begin{proof}
 \begin{asydef}
-void drawDiag(pair D, pair E, pair F) {
+void draw_triangledef(pair D, pair E, pair F) {
     label("$D^*$", D, dir(20), p=blue);
     label("$E^*$", E, dir(-50), p=blue);
     label("$F^*$", F, dir(-130), p=blue);
-    draw(D--E--F--cycle);
+    //draw(D--E--F--cycle);
     draw((2E-D)--(2D-E));
     draw((2F-E)--(2E-F));
     draw((2D-F)--(2F-D));
@@ -244,7 +246,47 @@ void drawDiag(pair D, pair E, pair F) {
     label("$7$", (D+E+F)/3, p=fontsize(10pt));
 }
 \end{asydef}
-If any three points are collinear, we are guaranteed to create a degenerate quadrilateral by simply considering a fourth point. Assuming this is not the case, the six points form a convex hull $\mathcal{H}$ with nonzero area. This convex hull must contain exactly three points; otherwise, the points on the convex hull will determine a convex or degenerate polygon with at least four sides. Without loss of generality, let $A^*$, $B^*$, and $C^*$ be the points on the convex hull. Points $D^*$, $E^*$, and $F^*$, which are all inside $\triangle A^*B^*C^*$, form a triangle, and the extensions of their sides partition the plane into seven convex regions as follows:
+If any three points are collinear, a fourth point will create a triangle (which is a convex simple polygon) or a set of four collinear points (which is not a simple polygon).
+
+\begin{center}
+\begin{asy}
+size(6cm,0);
+defaultpen(fontsize(8pt));
+
+pair D = (0,0), E = (2,0), F = (5,0);
+pair A = (4,0);
+draw(D--F);
+
+pair[] points = {D, E, F, A};
+string[] labels = {"$D^*$", "$E^*$", "$F^*$", "$A^*$"};
+int[] dirs = {-90,-90,-90, -90};
+
+for (int i = 0; i < points.length; ++i) {
+  label(labels[i], points[i], dir(dirs[i]));
+  dot(points[i], red);
+}
+\end{asy}
+\begin{asy}
+size(6cm,0);
+defaultpen(fontsize(8pt));
+
+pair D = (0,0), E = (2,0), F = (5,0);
+pair A = (4,3);
+draw(D--F);
+
+pair[] points = {D, E, F, A};
+string[] labels = {"$D^*$", "$E^*$", "$F^*$", "$A^*$"};
+int[] dirs = {-90,-90,-90, 90};
+filldraw(D--F--A--cycle,palecyan,black);
+
+for (int i = 0; i < points.length; ++i) {
+  label(labels[i], points[i], dir(dirs[i]));
+  dot(points[i], red);
+}
+\end{asy}
+\end{center}
+
+Assuming this is not the case, the six points form a convex hull $\mathcal{H}$ with nonzero area. This convex hull must contain exactly three points; otherwise, the points on the convex hull will determine a convex or degenerate polygon with at least four sides. Without loss of generality, let $A^*$, $B^*$, and $C^*$ be the points on the convex hull. Points $D^*$, $E^*$, and $F^*$, which are all inside $\triangle A^*B^*C^*$, form a triangle, and the extensions of their sides partition the plane into seven convex regions as follows:
 \begin{center}
 \begin{asy}
 size(6cm,0);
@@ -252,13 +294,13 @@ import graph;
 defaultpen(fontsize(8pt));
 
 pair D = (2,4),E = (0,0),F = (5,0);
-drawDiag(D,E,F);
+draw_triangledef(D,E,F);
 \end{asy}
 \end{center}
 
 Because $A^*$ is part of the convex hull, it cannot be inside region 7, in which case it would fail to be part of the convex hull. The same reasoning applies for $B^*$ and $C^*$.
 
-If $A^*$ (and likewise for $B^*$ and $C^*$) is on regions 2, 4, or 6, we claim that $D^*E^*F^*A^*$ will be a convex quadrilateral under some permutation. Without loss of generality, let $A^*$ lie on region 2, as shown in the diagram below. Then, points $D^*$ and $E^*$ lie on opposite sides of the line $A^*F^*$. $A^*$ and $F^*$ also lie on opposite sides of the line $E^*D^*$. Therefore, the quadrilateral $E^*A^*D^*F^*$ is convex.
+If $A^*$ (and likewise for $B^*$ and $C^*$) is on regions 2, 4, or 6, we claim that $D^*E^*F^*A^*$ will be a convex quadrilateral under some permutation. Without loss of generality, let $A^*$ lie on region 2, as shown in the diagram below. Then, points $D^*$ and $E^*$ lie on opposite sides of the line $A^*F^*$. $A^*$ and $F^*$ also lie on opposite sides of the line $E^*D^*$. Therefore, the quadrilateral $E^*A^*D^*F^*$ is not concave.
 
 
 \begin{center}
@@ -273,7 +315,7 @@ pair A = (-4,1);
 dot(A, red);
 fill(F--D--A--E--cycle, palecyan);
 label("$A^*$", A, 2*dir(120), p=red);
-drawDiag(D,E,F);
+draw_triangledef(D,E,F);
 
 draw(D--E,red);
 draw(A--F,red);
@@ -285,7 +327,7 @@ We can now assume that points $A^*$, $B^*$, and $C^*$ will only occupy regions 1
 
 Consider the case where $A^*$, $B^*$, and $C^*$ all reside on one of these regions. Without loss of generality, let all three of them be on region $1$. Then, the line $D^*E^*$ separates $\triangle A^*B^*C^*$ from $F^*$, so $\triangle A^*B^*C^*$ is not a convex hull.
 
-This means that at least two of the regions need to be occupied. Without loss of generality, assume that $A^*$ is in region 1 and $B^*$ is in region 3. Since $D^*$ and $B^*$ must be on opposite sides of the line $A^*E^*$, and points $A^*$ and $E^*$ are on opposite sides of the line $B^*D^*$, it follows that $A^*D^*E^*B^*$ is a convex quadrilateral.
+This means that at least two of the regions need to be occupied. Without loss of generality, assume that $A^*$ is in region 1 and $B^*$ is in region 3. Since $D^*$ and $B^*$ are on opposite sides of the line $A^*E^*$, and points $A^*$ and $E^*$ are on opposite sides of the line $B^*D^*$, it follows that $A^*D^*E^*B^*$ is a non-concave quadrilateral.
 
 \begin{center}
 \begin{asy}
@@ -306,7 +348,7 @@ fill(A--B--C--cycle, palecyan);
 label("$A^*$", A, dir(120), p=red);
 label("$B^*$", B, dir(180), p=red);
 label("$C^*$", C, dir(0), p=red);
-drawDiag(D,E,F);
+draw_triangledef(D,E,F);
 
 drawline(D,E,red+linewidth(2));
 draw(A--B--C--cycle, deepgreen);
@@ -326,7 +368,7 @@ dot(B, red);
 fill(A--D--E--B--cycle, palecyan);
 label("$A^*$", A, 2*dir(120), p=red);
 label("$B^*$", B, 2*dir(180), p=red);
-drawDiag(D,E,F);
+draw_triangledef(D,E,F);
 
 drawline(A, E, red);
 drawline(B, D, red);
@@ -545,7 +587,7 @@ label("$C$", align=N, C);
 \end{asy}
 \end{center}
 
-Because of this definition, $\Gamma_B$ and $\Gamma_C$ will pass through $A$ and the foot of the perpendicular line from $A$ to $BC$ (which we will temporarily denote $D$). Therefore, the locus of all points that are on both $\Gamma_B$ and $\Gamma_C$ will be a circle with diameter $AD$ and which is perpendicular to the xy plane. So, the projection of $P$ onto the xy plane, mapping from $(x,y,z) \rightarrow (x,y,0)$, must be on the set of all points on segment $AD$ excluding $A$. We repeat the same reasoning for the other two cases. Therefore, the projection of $P$ is on the orthocenter of $\triangle ABC$ (denoted $H$), and it can only exist if $\triangle ABC$ is acute.
+Because of this definition, $\Gamma_B$ and $\Gamma_C$ will pass through $A$ and the foot of the perpendicular from $A$ to $BC$ (which we will temporarily denote $D$). Therefore, the locus of all points that are on both $\Gamma_B$ and $\Gamma_C$ will be a circle with diameter $AD$ and which is perpendicular to the xy plane, excluding the point $A$. So, the projection of $P$ onto the xy plane, mapping from $(x,y,z) \rightarrow (x,y,0)$, must be on the set of all points on segment $AD$ excluding $A$. We repeat the same reasoning for the other two cases. Therefore, the projection of $P$ is on the orthocenter of $\triangle ABC$ (denoted $H$), and it can only exist if $\triangle ABC$ is acute.
 
 \begin{claim}
 All points on the open unit disk are an orthocenter of some acute triangle with vertices on the unit circle.
@@ -633,7 +675,8 @@ draw(M--H,red);
 draw(M--C,red);
 draw(M--Mp,red+dashed);
 draw(rightanglemark(M,Mp,C));
-draw(circumcircle(B,C,F), blue+dotted);
+draw(circumcircle(B,C,F), blue+dashed);
+draw(circle((F+C)/2, abs((F-C)/2)), red+dashed);
 
 add(pathticks(H--F, n=1));
 add(pathticks(Hp--F, n=1));
@@ -651,9 +694,8 @@ for (int i = 0; i < angles.length; ++i) {
 Let $M$ be the midpoint of $BC$. Since $M$ is the center of $\Gamma_A$ and $P$ is the concurrency point of all three circles, $MP = MB = MC$. Therefore, $HP^2 = MC^2 - MH^2$. By Power of Point,
 $$\frac{1 - OH^2}{2} = \frac{OA^2 - OH^2}{2} = \frac{CH \cdot HH'}{2} = CH \cdot HF$$ Now, Let $M'$ be the midpoint of $CF$. Since $CF$ is a chord of the circumcircle of $BFEC$ with center $M$, $MM' \perp CF$. By the Pythagorean theorem and a little bit of algebra,
 \[
-MC^2 - MH^2 = \paren{MM'^2 + M'C^2} - \paren{MM'^2 + M'H^2} = M'C^2 - MH^2 = (M'C+M'H)(M'C-M'H) = CH \cdot CF
-\]
-So, we have proven that these two expressions are equal. This logic is equally applicable to the other spheres $\Gamma_B$ and $\Gamma_C$, so the $P$ we have derived is the concurrency point of all three spheres.
+MC^2 - MH^2 = \paren{MM'^2 + M'C^2} - \paren{MM'^2 + M'H^2} = M'C^2 - M'H^2 \]
+This value is by definition equal to $-\Pow_{\omega}(H)$, where $\omega$ is the circle with diameter $FC$. So, $M'C^2 - M'H^2 = FH \cdot CH$. This reasoning can be applied to the other spheres $\Gamma_B$ and $\Gamma_C$, so the $P$ we have derived is the concurrency point of all three spheres.
 
 \end{proof}
 

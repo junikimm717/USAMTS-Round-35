@@ -65,6 +65,7 @@
 \setcounter{equation}0
 }{\eject}
 
+\DeclareMathOperator{\Pow}{Pow}
 \renewcommand{\qedsymbol}{$\blacksquare$}
 \renewcommand{\qed}{\hfill$\blacksquare$}
 
