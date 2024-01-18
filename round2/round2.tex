@@ -210,8 +210,8 @@ The answer is all $n,m$ such that \fbox{$n+m \equiv 1 \mod 4$ or $n \equiv m \mo
 \end{claim}
 \begin{proof}
     Let $T$ contain points of the form $(x_i,y_i)$.
-    $$\sum_i x_i + \sum_i y_i \equiv \sum_{k=1}^{m+n-1} 1 + \sum_{k=1}^{m+n-1} 1 \equiv 0 \mod 2$$
-    $$\sum_i x_i + y_i \equiv \sum_{k=m+1}^{2m+n-1} 1 \equiv \frac{1}{2} \paren{m+n-1}\paren{3m+n} \mod 2$$
+    $$\sum_i x_i + \sum_i y_i \equiv \sum_{k=1}^{m+n-1} k + \sum_{k=1}^{m+n-1} k \equiv 0 \mod 2$$
+    $$\sum_i x_i + y_i \equiv \sum_{k=m+1}^{2m+n-1} k \equiv \frac{1}{2} \paren{m+n-1}\paren{3m+n} \mod 2$$
     Since $\paren{\sum_i x_i} + \paren{\sum_i y_i} = \sum_i \paren{x_i+y_i}$, $\frac{1}{2} (m+n-1)(3m+n)$ must be even to prevent a contradiction.
     So, it follows that $(m+n-1)(n-m)$ is congruent to 0 mod 4. Since $(n-m)$ and $(m+n-1)$ always differ in parity, it follows that exactly one of them must be divisible by 4. This implies that either $n+m \equiv 1 \mod 4$ or $n \equiv m \mod 4$.
 \end{proof}
